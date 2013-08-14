@@ -1,0 +1,69 @@
+		CHANGES IN SigTree VERSION 1.3
+
+NEW FEATURES
+
+    o N/A
+	
+BUG FIXES
+
+    o N/A
+
+OTHER CHANGES
+
+    o License is now GPL-3 rather than restricted
+	  for non-academic or commercial users (to make
+	  CRAN-compatible).
+
+	o Included functions from ape package so that all 
+	  .C calls remain within SigTree (to make CRAN-
+	  compatible).
+	
+	
+	  CHANGES IN SigTree VERSION 1.2
+
+NEW FEATURES
+
+    o Edge-specific coloring (as in FigTree) is now allowed
+	  using the "branch='edge'" option in plotSigTree
+	  and export.figtree.  Corresponding branch labels
+	  (edge or node specific) added using "branch.label"
+	  argument.
+
+	o Root edge addition (and coloring) now allowed by
+	  plotSigTree using "root.edge" argument.
+
+	o Branch labels (for either edge or node, as controlled
+	  by "branch" argument) made to agree between
+	  plotSigTree and export.inherit functions.
+
+BUG FIXES
+
+    o N/A
+
+OTHER CHANGES
+
+    o For 1-sided p-values and a named color palette like 'RdBu',
+	  the default mid-range color is now a medium grey for 
+	  easier viewing (in plotSigTree and export.figtree).
+
+	  
+
+ 	   CHANGES IN SigTree VERSION 1.1
+
+
+NEW FEATURES
+
+    o The default multiple testing adjustment is now 
+	  "method='hommel'".
+
+BUG FIXES
+
+    o N/A
+
+OTHER CHANGES
+
+    o The package now has a tutorial vignette, accessible using
+	  "vignette('SigTree')".
+	 
+	o The function 'plot.color' has been re-named 'plotSigTree'
+	  to resolve S3 class issues.
