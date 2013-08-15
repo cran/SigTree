@@ -1,0 +1,2 @@
+exportPattern(num.edges, num.tips, num.internal.nodes, num.total.nodes, srt.pvalues, stouffers, fishers, index.matrix, p.p2.ADJ.p1, result, tip.colors, edge.colors, plotSigTree, export.figtree, export.inherit, plotphylo2, circularplot2)
+useDynLib(SigTree)
