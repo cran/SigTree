@@ -1,7 +1,7 @@
 citEntry(entry = "Article",
          "author" = "John R. Stevens and Todd R. Jones and Michael Lefevre",
-         "title" = "SigTree: An Automated Meta-Analytic Approach to Find Significantly Responsive Branches in a Phylogenetic Tree",
+         "title" = "SigTree: finding significantly responsive branches in a phylogenetic tree",
          journal = "(Manuscript in preparation)",
          year = "2013",
-         textVersion = "Stevens J.R., Jones T.R., and Lefevre M. (2013) SigTree: An Automated Meta-Analytic Approach to Find Significantly Responsive Branches in a Phylogenetic Tree. (Manuscript in preparation)"
+         textVersion = "Stevens J.R., Jones T.R., and Lefevre M. (2013) SigTree: finding significantly responsive branches in a phylogenetic tree. (Manuscript in preparation)"
 ) 

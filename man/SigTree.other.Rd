@@ -33,8 +33,8 @@ Internal functions used by the main functions of \code{SigTree} (\code{plotSigTr
 \code{result}  \tab calculate p-values for each node/edge branch \cr
 \code{tip.colors}  \tab determine coloring of each tip \cr
 \code{edge.colors}  \tab determine coloring of each edge \cr
-\code{plotphylo2}   \tab (based on \code{ape} package's \code{plot.phylo} function); plots \code{tree} while allowing for different edge coloring (root edge when type='fan', and different colors for each half of the 'perpendicular-to-the-root' edges). Prior to package version 1.2, \code{plot.phylo} was used instead. Beginning in package version 1.3 (to attain CRAN compatibility), includes .C calls to copies of four \code{ape} .C functions (copied with credit under \code{ape}'s GPL license).\cr
-\code{circularplot2} \tab (based on \code{ape} package's \code{circular.plot} function) called by \code{phyloplot2} when type='fan' \cr
+\code{plotphylo2}   \tab (based on \code{ape} package's \code{plot.phylo} function); plots \code{tree} while allowing for different edge coloring (root edge when \code{type="fan"}, and different colors for each half of the "perpendicular-to-the-root" edges). Prior to package version 1.2, \code{plot.phylo} was used instead. Beginning in package version 1.3 (to attain CRAN compatibility), includes .C calls to copies of four \code{ape} .C functions (copied with credit under \code{ape}'s GPL license).\cr
+\code{circularplot2} \tab (based on \code{ape} package's \code{circular.plot} function) called by \code{phyloplot2} when \code{type="fan"} \cr
 \tab \cr
   }
 }
@@ -42,12 +42,12 @@ Internal functions used by the main functions of \code{SigTree} (\code{plotSigTr
 \details{
 It is assumed that each internal node has exactly two descendants.  It is also assumed that each internal node has a lower number than each of its ancestors (excluding tips).
 
-To access the tutorial document for this package (including this function), type in R: \code{vignette('SigTree')}
+To access the tutorial document for this package (including this function), type in R: \code{vignette("SigTree")}
 
 }
 
 \references{
-Stevens J.R., Jones T.R., and Lefevre M. (2013) "SigTree: An Automated Meta-Analytic Approach to Find Significantly Responsive Branches in a Phylogenetic Tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., and Lefevre M. (2013) "SigTree: finding significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
@@ -62,7 +62,7 @@ In that reference, (and prior to package version number 1.1), the \code{srt.pval
 }
 
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
+% Add one or more standard keywords, see file "KEYWORDS" in the
 % R documentation directory.
 \keyword{ tree }
 

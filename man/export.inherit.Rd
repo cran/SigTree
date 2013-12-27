@@ -28,34 +28,34 @@ a logical argument that controls whether there is p-value adjustment performed (
 a numerical argument that takes values \code{1} and \code{2}, depending on whether the p-values in \code{unsorted.pvalues} are 1-sided or 2-sided, respectively.  Only used in p-value adjustment if \code{adjust = TRUE}.
 }
   \item{method}{
-one of the p-value adjustment methods (used for multiple-hypothesis testing) found in p.adjust.methods (\code{``holm''}, \code{``hochberg''}, \code{``hommel''}, \code{``bonferroni''}, \code{``BH''}, \code{``BY''}, \code{``fdr''}, and \code{``none''}).  See help for \code{p.adjust} for more details on these methods.  \code{method} is only used if \code{adjust = TRUE}.
+one of the p-value adjustment methods (used for multiple-hypothesis testing) found in \code{p.adjust.methods} (\code{"holm"}, \code{"hochberg"}, \code{"hommel"}, \code{"BH"}, \code{"bonferroni"}, \code{"BY"}, \code{"fdr"}, and \code{"none"}).  See help for \code{p.adjust} for more details on these methods.  \code{method} is only used if \code{adjust = TRUE}.
 }
   \item{file}{
 the file path for the \code{CSV} file to be written to.  If \code{frame=TRUE}, no CSV file is created.  If \code{frame=FALSE}, a CSV file will only be created if \code{file} is specified. 
 }
   \item{test}{
-a character string taking on either \code{``Stouffers''} or \code{``Fishers''}.  This is the p-value combination method that will be used.
+a character string taking on either \code{"Stouffers"} or \code{"Fishers"}.  This is the p-value combination method that will be used.
 }
   \item{frame}{
 a logical argument that controls whether or not to return (in R) the resulting \code{data.frame} object. If FALSE, \code{file} must be specified.  
 }
 
   \item{branch}{
-  a character controlling branch definition: ``edge'' and ``node'' are the only options.  This does not affect statistical methods, only the colors used in edge coloring. Prior to package version 1.2, only branch="node" was implemented.  The edge and node numbering is internal to class \code{phylo}, and are not necessarily sequential numbers. 
+  a character controlling branch definition: \code{"edge"} and \code{"node"} are the only options.  This does not affect statistical methods, only the colors used in edge coloring. Prior to package version 1.2, only \code{branch="node"} was implemented.  The edge and node numbering is internal to class \code{phylo}, and are not necessarily sequential numbers. 
 }
 
 }
 \details{
 The tip labels of \code{tree} (accessed via \code{tree$tip.label}) must have the same names (and the same length) as the tip labels in \code{unsorted.pvalues}, but may be in a different order.  The p-values in column 2 of \code{unsorted.pvalues} obviously must be in the [0, 1] range.  \code{export.inherit} assumes that each internal node has exactly two descendants.  It also assumes that each internal node has a lower number than each of its ancestors (excluding tips).
 
-To access the tutorial document for this package (including this function), type in R: \code{vignette('SigTree')}
+To access the tutorial document for this package (including this function), type in R: \code{vignette("SigTree")}
 
 }
 \value{
 This function produces a \code{CSV} file; alternatively, if \code{frame=TRUE}, this function will return a \code{data.frame} object.
 }
 \references{
-Stevens J.R., Jones T.R., and Lefevre M. (2013) "SigTree: An Automated Meta-Analytic Approach to Find Significantly Responsive Branches in a Phylogenetic Tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., and Lefevre M. (2013) "SigTree: finding significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
@@ -67,7 +67,7 @@ John R. Stevens and Todd R. Jones
 
 \examples{
 ### To access the tutorial document for this package, type in R (not run here): 
-# vignette('SigTree')
+# vignette("SigTree")
 
 ### Create tree, then data frame, then use plotSigTree to plot the tree
 ### Code for random tree and data frame

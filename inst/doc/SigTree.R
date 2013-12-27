@@ -16,15 +16,15 @@ tre.path <- system.file("sample", package="SigTree")
 ### code chunk number 3: SigTree.Rnw:121-125
 ###################################################
 library(ape)
-tree.file <- paste(tre.path,"sample.tre",sep='/')
+tree.file <- paste(tre.path,"sample.tre",sep="/")
 tree <- read.tree(tree.file)
-plot(tree,type='fan')
+plot(tree,type="fan")
 
 
 ###################################################
 ### code chunk number 4: SigTree.Rnw:145-148
 ###################################################
-sig.file <- paste(tre.path,"sample.csv",sep='/')
+sig.file <- paste(tre.path,"sample.csv",sep="/")
 frame <- read.csv(sig.file)
 head(frame)
 
@@ -48,7 +48,7 @@ library(RColorBrewer)
 RdBu <- brewer.pal(7, "RdBu")
 RdBu[4] <- brewer.pal(7, "Greys")[3]
 plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2)
-legend('topright',c('C > T','C < T'),cex=1.5,text.col=RdBu[c(7,1)],bty='n')
+legend("topright",c("C > T","C < T"),cex=1.5,text.col=RdBu[c(7,1)],bty="n")
 
 
 ###################################################
@@ -61,19 +61,19 @@ legend('topright',c('C > T','C < T'),cex=1.5,text.col=RdBu[c(7,1)],bty='n')
 ### code chunk number 9: SigTree.Rnw:253-257
 ###################################################
 plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2)
-p.cut.leg <- c('0.00 - 0.01','0.01 - 0.05','0.05 - 0.10',
-               '0.10 - 0.90','0.90 - 0.95','0.95 - 0.99','0.99 - 1.00')
-legend('topright',rev(p.cut.leg),text.col=rev(RdBu), bty='n', cex=1)
+p.cut.leg <- c("0.00 - 0.01","0.01 - 0.05","0.05 - 0.10",
+               "0.10 - 0.90","0.90 - 0.95","0.95 - 0.99","0.99 - 1.00")
+legend("topright",rev(p.cut.leg),text.col=rev(RdBu), bty="n", cex=1)
 
 
 ###################################################
 ### code chunk number 10: SigTree.Rnw:297-302
 ###################################################
 plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2, 
-            branch='node')
-p.cut.leg <- c('0.00 - 0.01','0.01 - 0.05','0.05 - 0.10',
-               '0.10 - 0.90','0.90 - 0.95','0.95 - 0.99','0.99 - 1.00')
-legend('topright',rev(p.cut.leg),text.col=rev(RdBu), bty='n', cex=1)
+            branch="node")
+p.cut.leg <- c("0.00 - 0.01","0.01 - 0.05","0.05 - 0.10",
+               "0.10 - 0.90","0.90 - 0.95","0.95 - 0.99","0.99 - 1.00")
+legend("topright",rev(p.cut.leg),text.col=rev(RdBu), bty="n", cex=1)
 
 
 ###################################################
@@ -93,7 +93,7 @@ plotSigTree(tree, frame, method="BY")
 ###################################################
 plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2, 
             branch.label=TRUE, branch.label.size=.75)
-edgelabels(edge=176,frame='circ',bg='yellow',cex=.8)
+edgelabels(edge=176,frame="circ",bg="yellow",cex=.8)
 
 
 ###################################################
@@ -111,7 +111,7 @@ temp <- export.inherit(tree, frame, frame=TRUE)
 ###################################################
 ### code chunk number 16: SigTree.Rnw:369-372
 ###################################################
-br176 <- temp[temp$Branch=='176',]
+br176 <- temp[temp$Branch=="176",]
 t <- !is.na(br176[1,])
 br176[1,t]
 
@@ -119,7 +119,7 @@ br176[1,t]
 ###################################################
 ### code chunk number 17: SigTree.Rnw:380-383
 ###################################################
-br106 <- temp[temp$Branch=='106',]
+br106 <- temp[temp$Branch=="106",]
 t <- !is.na(br106[1,])
 br106[1,t]
 
@@ -163,7 +163,7 @@ sig_tree <- read.nexus("sigsample.tre")
 ###################################################
 ### code chunk number 23: SigTree.Rnw:467-469 (eval = FALSE)
 ###################################################
-## singletontree.file <- paste(tre.path,"singletonsample.tre",sep='/')
+## singletontree.file <- paste(tre.path,"singletonsample.tre",sep="/")
 ## tree <- read.tree(singletontree.file)
 
 
@@ -180,7 +180,7 @@ sig_tree <- read.nexus("sigsample.tre")
 ## t3.split <- t2.split[c(1:(t2.len-2),t2.len)]
 ## t3 <- paste(t3.split,collapse=")")
 ## # write to file (fixed now) and read in again
-## newtree.file <- paste(tre.path,"fixedsinglesample.tre",sep='/')
+## newtree.file <- paste(tre.path,"fixedsinglesample.tre",sep="/")
 ## write.table(t3,file=newtree.file, quote=F, col.names=F, row.names=F)
 ## t4 <- read.tree(newtree.file)
 
