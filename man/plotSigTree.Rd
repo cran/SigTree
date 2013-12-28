@@ -35,7 +35,7 @@ a logical argument that controls whether there is p-value adjustment performed (
 a numerical argument that takes values \code{1} and \code{2}, depending on whether the p-values in \code{unsorted.pvalues} are 1-sided or 2-sided, respectively.  Only used in p-value adjustment if \code{adjust = TRUE}.
 }
   \item{method}{
-one of the p-value adjustment methods (used for multiple-hypothesis testing) found in p.adjust.methods (\code{``holm''}, \code{``hochberg''}, \code{``hommel''}, \code{``bonferroni''}, \code{``BH''}, \code{``BY''}, \code{``fdr''}, and \code{``none''}).  See help for \code{p.adjust} for more details on these methods.  \code{method} is only used if \code{adjust = TRUE}.
+one of the p-value adjustment methods (used for multiple-hypothesis testing) found in \code{p.adjust.methods} (\code{"holm"}, \code{"hochberg"}, \code{"hommel"}, \code{"BH"}, \code{"bonferroni"}, \code{"BY"}, \code{"fdr"}, and \code{"none"}).  See help for \code{p.adjust} for more details on these methods.  \code{method} is only used if \code{adjust = TRUE}.
 }
   \item{p.cutoffs}{
 a vector of increasing p-value cutoffs (excluding 0 and 1) to determine the ranges of p-values used in the coloring of the branches.
@@ -44,10 +44,10 @@ a vector of increasing p-value cutoffs (excluding 0 and 1) to determine the rang
 one of the palettes from the RColorBrewer package (see \code{brewer.pal.info} for a list) or a vector of hexadecimal colors (or other valid \code{R} colors).  These are the colors that are used to color the branches.  The first color corresponds to the first range in p.cutoffs and so on.
 }
   \item{test}{
-a character string taking on either \code{``Stouffers''} or \code{``Fishers''}.  This is the p-value combination method that will be used.
+a character string taking on either \code{"Stouffers"} or \code{"Fishers"}.  This is the p-value combination method that will be used.
 }
   \item{branch.label}{
-a logical argument that controls whether the branches are labeled (\code{TRUE}) or not (\code{FALSE}). This results in either edges or nodes being labeled, depending on the \code{branch} argument.  The edge and node labeling is internal to class \code{phylo}, and are not necessarily sequential numbers.  When \code{branch='edge'} is used, the tip edges are not labeled (to avoid clutter).  Branch labels match those returned by \code{export.inherit}.
+a logical argument that controls whether the branches are labeled (\code{TRUE}) or not (\code{FALSE}). This results in either edges or nodes being labeled, depending on the \code{branch} argument.  The edge and node labeling is internal to class \code{phylo}, and are not necessarily sequential numbers.  When \code{branch="edge"} is used, the tip edges are not labeled (to avoid clutter).  Branch labels match those returned by \code{export.inherit}.
 }
   \item{tip.color}{
 a logical argument that controls whether the tips are colored (\code{TRUE}) or not (\code{FALSE}). 
@@ -62,7 +62,7 @@ a numerical argument that controls the (cex) size of the text of the tip labels.
 a numerical argument that controls the (cex) size of the text of the branch labels (see \code{branch.label} argument).
 }
   \item{type}{
-a character string that controls which type of plot will be produced.  Possible values are \code{``phylogram''}, \code{``cladogram''}, \code{``fan''}, \code{``unrooted''}, and \code{``radial''}.  See \code{plot.phylo}.
+a character string that controls which type of plot will be produced.  Possible values are \code{"phylogram"}, \code{"cladogram"}, \code{"fan"}, \code{"unrooted"}, and \code{"radial"}.  See \code{plot.phylo}.
 }
   \item{use.edge.length}{
 a logical argument that uses the original edge lengths from \code{tree} (\code{TRUE}) or not (\code{FALSE}).  This has no effect if \code{tree} does not have edge lengths defined to begin with.  Can be affected by \code{root.edge}, depending on \code{type} (see \code{root.edge} below).
@@ -73,23 +73,23 @@ a logical argument that uses the original edge lengths from \code{tree} (\code{T
 }
 
   \item{branch}{
-  a character controlling branch definition: ``edge'' and ``node'' are the only options.  This does not affect statistical methods, only the colors used in edge coloring. Prior to package version 1.2, only branch="node" was implemented.
+  a character controlling branch definition: \code{"edge"} and \code{"node"} are the only options.  This does not affect statistical methods, only the colors used in edge coloring. Prior to package version 1.2, only \code{branch="node"} was implemented.
 }
 
   \item{root.edge}{
-  a logical argument that controls whether the root edge is plotted (\code{TRUE}) or not (\code{FALSE}). Note that \code{root.edge=TRUE} forces \code{use.edge.length=FALSE} when \code{type} is ``phylogram'', ``cladogram'', ``fan'', or ``unrooted''.
+  a logical argument that controls whether the root edge is plotted (\code{TRUE}) or not (\code{FALSE}). Note that \code{root.edge=TRUE} forces \code{use.edge.length=FALSE} when \code{type} is \code{"phylogram"}, \code{"cladogram"}, \code{"fan"}, or \code{"unrooted"}.
   }
 
   \item{branch.label.frame}{
-  a character controlling the frame around the branch labels (only used when \code{branch.label=TRUE}).  Only options ``none'', ``circ'', and ``rect'' are supported.
+  a character controlling the frame around the branch labels (only used when \code{branch.label=TRUE}).  Only options \code{"none"}, \code{"circ"}, and \code{"rect"} are supported.
   }
 }
 \details{
-The tip labels of \code{tree} (accessed via \code{tree$tip.label}) must have the same names (and the same length) as the tip labels in \code{unsorted.pvalues}, but may be in a different order.  The p-values in column 2 of \code{unsorted.pvalues} obviously must be in the [0, 1] range.  \code{p.cutoffs} takes values in the (0, 1) range.  The default value for \code{p.cutoffs} is \code{c(0.01, 0.05, 0.1, 0.9, 0.95, 0.99)} if \code{side} is \code{1} and \code{c(0.01, 0.05, 0.1)} if side is \code{2}.  Thus, the ranges (when side is \code{1}) are: [0, .01], (.01, .05], ..., (.99, 1].  These ranges correspond to the colors specified in \code{pal}.  P-values in the [0, .01] range correspond to the left-most color if \code{pal} is a palette (view this via \code{display.brewer.pal(x, pal)} - where \code{x} is the number of colors to be used) or the first value in the vector if \code{pal} is a vector of colors.  If \code{pal} is a vector of colors, then the length of \code{pal} should be one greater than the length of \code{p.cutoffs}.  In other words, its length must be the same as the number of p-value ranges.  An example of a color in hexadecimal format is \code{``#B2182B''}. The default value of \code{pal} is \code{"RdBu"} (a divergent palette of reds and blues, with reds corresponding to small p-values) if \code{side} is \code{1} and the reverse of \code{"Reds"} (a sequential palette) if \code{side} is {2}.   The sequential palettes in \code{RColorBrewer} go from light to dark, so ``Reds'' is reversed so that the dark red corresponds to small p-values.    It probably makes more sense to use a divergent palette when using 1-sided p-values and a sequential palette (reversed) when using 2-sided p-values.  To create a vector of reversed colors from a palette with \code{x} number of colors and \code{``PaletteName''} as the name of the palette, use \code{rev(brewer.pal(x, ``PaletteName''))}.  \code{use.edge.length} may be useful to get a more uniformly-shaped tree.  \code{plotSigTree} assumes that each internal node has exactly two descendants.  It also assumes that each internal node has a lower number than each of its ancestors (excluding tips).
+The tip labels of \code{tree} (accessed via \code{tree$tip.label}) must have the same names (and the same length) as the tip labels in \code{unsorted.pvalues}, but may be in a different order.  The p-values in column 2 of \code{unsorted.pvalues} obviously must be in the [0, 1] range.  \code{p.cutoffs} takes values in the (0, 1) range.  The default value for \code{p.cutoffs} is \code{c(0.01, 0.05, 0.1, 0.9, 0.95, 0.99)} if \code{side} is \code{1} and \code{c(0.01, 0.05, 0.1)} if side is \code{2}.  Thus, the ranges (when side is \code{1}) are: [0, .01], (.01, .05], ..., (.99, 1].  These ranges correspond to the colors specified in \code{pal}.  P-values in the [0, .01] range correspond to the left-most color if \code{pal} is a palette (view this via \code{display.brewer.pal(x, pal)} - where \code{x} is the number of colors to be used) or the first value in the vector if \code{pal} is a vector of colors.  If \code{pal} is a vector of colors, then the length of \code{pal} should be one greater than the length of \code{p.cutoffs}.  In other words, its length must be the same as the number of p-value ranges.  An example of a color in hexadecimal format is \code{"#B2182B"}. The default value of \code{pal} is \code{"RdBu"} (a divergent palette of reds and blues, with reds corresponding to small p-values) if \code{side} is \code{1} and the reverse of \code{"Reds"} (a sequential palette) if \code{side} is {2}.   The sequential palettes in \code{RColorBrewer} go from light to dark, so \code{"Reds"} is reversed so that the dark red corresponds to small p-values.    It probably makes more sense to use a divergent palette when using 1-sided p-values and a sequential palette (reversed) when using 2-sided p-values.  To create a vector of reversed colors from a palette with \code{x} number of colors and \code{"PaletteName"} as the name of the palette, use \code{rev(brewer.pal(x, "PaletteName"))}.  \code{use.edge.length} may be useful to get a more uniformly-shaped tree.  \code{plotSigTree} assumes that each internal node has exactly two descendants.  It also assumes that each internal node has a lower number than each of its ancestors (excluding tips).
 
-The \code{branch} argument controls whether edge coloring corresponds to the combined p-value of the tips below the edge (``edge'') or of the tips below the edge's leading (away from the tips) node (``node'').  Note that if \code{branch="node"} is used, then both edges leaving a node will necessarily be colored the same.
+The \code{branch} argument controls whether edge coloring corresponds to the combined p-value of the tips below the edge (\code{"edge"}) or of the tips below the edge's leading (away from the tips) node (\code{"node"}).  Note that if \code{branch="node"} is used, then both edges leaving a node will necessarily be colored the same.
 
-To access the tutorial document for this package (including this function), type in R: \code{vignette('SigTree')}
+To access the tutorial document for this package (including this function), type in R: \code{vignette("SigTree")}
 
 
 }
@@ -98,7 +98,7 @@ This function produces a phylogenetic tree plot.
 }
 \references{
 
-Stevens J.R., Jones T.R., and Lefevre M. (2013) "SigTree: An Automated Meta-Analytic Approach to Find Significantly Responsive Branches in a Phylogenetic Tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., and Lefevre M. (2013) "SigTree: finding significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
