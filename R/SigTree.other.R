@@ -365,6 +365,9 @@ edge.colors <- function(tree, unsorted.pvalues, p.cutoffs, pal, test, adjust, si
 #   as the last color in edge.color.
 # - This function also allows for root.edge=TRUE for both type='phylogram'
 #   and type='fan' (plot.phylo only supported type='phylogram')
+# Beginning in SigTree version 1.5, the sections here relating to .C() calls
+#   are updated to coincide with the newer version of SigTree.c (which itself
+#   is a copy of the updated plot_phylo.c file from the ape package)
 plotphylo2 <-
 function (x, type = "phylogram", use.edge.length = TRUE, node.pos = NULL, 
     show.tip.label = TRUE, show.node.label = FALSE, edge.color = "black", 
@@ -382,19 +385,21 @@ function (x, type = "phylogram", use.edge.length = TRUE, node.pos = NULL,
     }
     if (any(tabulate(x$edge[, 1]) == 1)) 
         stop("there are single (non-splitting) nodes in your tree; you may need to use collapse.singles()")
-    .nodeHeight <- function(Ntip, Nnode, edge, Nedge, yy) .C("node_height", 
-        as.integer(Ntip), as.integer(Nnode), as.integer(edge[, 
-            1]), as.integer(edge[, 2]), as.integer(Nedge), as.double(yy), 
-        DUP = FALSE, PACKAGE = "SigTree")[[6]]
-    .nodeDepth <- function(Ntip, Nnode, edge, Nedge) .C("node_depth", 
-        as.integer(Ntip), as.integer(Nnode), as.integer(edge[, 
-            1]), as.integer(edge[, 2]), as.integer(Nedge), double(Ntip + 
-            Nnode), DUP = FALSE, PACKAGE = "SigTree")[[6]]
-    .nodeDepthEdgelength <- function(Ntip, Nnode, edge, Nedge, 
-        edge.length) .C("node_depth_edgelength", as.integer(Ntip), 
-        as.integer(Nnode), as.integer(edge[, 1]), as.integer(edge[, 
-            2]), as.integer(Nedge), as.double(edge.length), double(Ntip + 
-            Nnode), DUP = FALSE, PACKAGE = "SigTree")[[7]]
+    .nodeHeight <- function(Ntip, Nnode, edge, Nedge, yy)
+        .C(node_height, as.integer(Ntip), as.integer(Nnode),
+           as.integer(edge[, 1]), as.integer(edge[, 2]),
+           as.integer(Nedge), as.double(yy), PACKAGE = "SigTree")[[6]]
+
+    .nodeDepth <- function(Ntip, Nnode, edge, Nedge, node.depth)
+        .C(node_depth, as.integer(Ntip), as.integer(Nnode),
+           as.integer(edge[, 1]), as.integer(edge[, 2]),
+           as.integer(Nedge), double(Ntip + Nnode), as.integer(node.depth), PACKAGE = "SigTree")[[6]]
+
+    .nodeDepthEdgelength <- function(Ntip, Nnode, edge, Nedge, edge.length)
+        .C(node_depth_edgelength, as.integer(Ntip),
+           as.integer(Nnode), as.integer(edge[, 1]),
+           as.integer(edge[, 2]), as.integer(Nedge),
+           as.double(edge.length), double(Ntip + Nnode), PACKAGE = "SigTree")[[7]]
     Nedge <- dim(x$edge)[1]
     Nnode <- x$Nnode
     ROOT <- Ntip + 1
@@ -452,10 +457,10 @@ function (x, type = "phylogram", use.edge.length = TRUE, node.pos = NULL,
         }
         if (node.pos == 1) 
            { yy <- .nodeHeight(Ntip, Nnode, z$edge, Nedge, yy) }  else {
-            ans <- .C("node_height_clado", as.integer(Ntip), 
-                as.integer(Nnode), as.integer(z$edge[, 1]), as.integer(z$edge[, 
-                  2]), as.integer(Nedge), double(Ntip + Nnode), 
-                as.double(yy), DUP = FALSE, PACKAGE = "SigTree")
+            ans <- .C(node_height_clado, as.integer(Ntip),
+                    as.integer(Nnode), as.integer(z$edge[, 1]),
+                    as.integer(z$edge[, 2]), as.integer(Nedge),
+                    double(Ntip + Nnode), as.double(yy), PACKAGE = "SigTree")
             xx <- ans[[6]] - 1
             yy <- ans[[7]]
         }

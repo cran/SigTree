@@ -46,7 +46,7 @@ These tools also allow additional exploration of the significance results.
 
 \vspace{3em}
 
-{\bf Note:} If you use this package please cite Stevens, Jones, and Lefevre (2013).
+{\bf Note:} If you use this package please cite Stevens, Jones, and Lefevre (2014).
 
 
 
@@ -545,7 +545,7 @@ without the problematic singleton node.
  {\it Biometrics} 46(2):303-308.
 
  \bibitem{Stevens2013}
- Stevens J.R., Jones T.R., and Lefevre M.L. (2013),
+ Stevens J.R., Jones T.R., and Lefevre M.L. (2014),
  ``SigTree: finding significantly responsive branches in a phylogenetic tree,''
  manuscript in preparation.
 

@@ -1,3 +1,26 @@
+		CHANGES IN SigTree VERSION 1.5
+
+NEW FEATURES
+
+    o N/A
+	
+BUG FIXES
+
+    o N/A
+
+OTHER CHANGES
+
+    o Cleaned up NAMESPACE and DESCRIPTION files
+	  (using Imports in DESCRIPTION and multiple import() 
+	  in correct order in NAMESPACE to appease CRAN)
+
+    o Updated SigTree.c to copy changes in plot_phylo.c from
+	  ape package; also updated .C() calls in plotphylo2 function
+	  to reflect these changes.  This was to appease CRAN,
+	  as ape changes in R version 3.1.0 had caused problems
+	  with SigTree.
+	
+	
 		CHANGES IN SigTree VERSION 1.4
 
 NEW FEATURES
