@@ -13,8 +13,8 @@ Determine significantly responsive branches in phylogenetic trees
 \tabular{ll}{
 Package: \tab SigTree\cr
 Type: \tab Package\cr
-Version: \tab 1.4\cr
-Date: \tab 2013-12-27\cr
+Version: \tab 1.6\cr
+Date: \tab 2014-07-15\cr
 License: \tab GPL-3\cr
 }
 For more information, see the documentation for 

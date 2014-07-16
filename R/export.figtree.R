@@ -58,6 +58,7 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	{
 		return(cat("Error: Class of tree must be phylo.","\n"))
 	}
+    tree <- reorder(tree, order='cladewise')
 	if(length(tree$tip.label)!=length(unsorted.pvalues[,1]))
 	{
 		return(cat("Error: There must be the same number of tip labels in tree as in unsorted.pvalues.","\n"))
@@ -145,10 +146,10 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	#  current node (ie. the row number).  Edge to the left refers to the edge
 	#  connecting to the immediate ancestor.  We use the which.edge function to find
 	#  this immediate ancestor.  Then label this column "Edge to Left."
-	for(i in 1:n.total.nodes)
-	{
-		results[i,2] <- which.edge(tree,i)
-	}
+
+	# The following line added 07.14.14 to avoid problems with new match.edge function from ape 3.1-3
+	results[,2] <- match(1:n.total.nodes, tree$edge[,2])
+		
 	names(results)[2]<-"Edge to Left"
 	#create a data frame called nodecolor filled with NA's and having n.total.nodes rows.
 	nodecolor<-data.frame(matrix(NA, nrow=n.total.nodes))

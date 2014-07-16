@@ -136,7 +136,7 @@ export.figtree(tree, frame, pal=RdBu, file="sigsample.tre")
 keep.taxa <- c("t57","t99","t53","t62","t39","t16",
                "t63","t67","t45","t1","t34","t82")
 library(phyloseq)
-new_tree <- prune_species(keep.taxa, tree)
+new_tree <- prune_taxa(keep.taxa, tree)
 
 
 ###################################################

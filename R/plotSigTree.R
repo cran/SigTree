@@ -83,6 +83,7 @@ plotSigTree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	{
 		return(cat("Error: Class of tree must be phylo.","\n"))
 	}
+    tree <- reorder(tree, order='cladewise')
 	if(length(tree$tip.label)!=length(unsorted.pvalues[,1]))
 	{
 		return(cat("Error: There must be the same number of tip labels in tree as in unsorted.pvalues.","\n"))

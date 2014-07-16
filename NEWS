@@ -1,3 +1,27 @@
+		CHANGES IN SigTree VERSION 1.6
+
+NEW FEATURES
+
+    o N/A
+	
+BUG FIXES
+
+    o The ape package's which.edge() function was rewritten
+	  in ape version 3.1-3 to allow trees not in clade-wise order,
+	  and this new version caused SigTree's export.figtree() function
+	  to stall.  The export.figtree(), plotSigTree(), and export.inherit()
+	  functions of SigTree all now have an added step to reorder
+	  the tree in clade-wise order, and rather than call the new
+	  which.edge() function inside a loop (as before), 
+	  export.figtree() instead accomplishes the same result (as the call
+	  to the old which.edge() function) by an efficient call 
+	  of the match() function.
+
+OTHER CHANGES
+
+    o N/A
+	
+
 		CHANGES IN SigTree VERSION 1.5
 
 NEW FEATURES
