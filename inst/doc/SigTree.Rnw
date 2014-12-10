@@ -4,7 +4,7 @@
 %\VignettePackage{SigTree}
 \documentclass[12pt, a4paper]{article}
 
-\title{SigTree:  An Automated Meta-Analytic Approach to Find Significantly Responsive Branches in a Phylogenetic Tree}
+\title{\Rpackage{SigTree} Tutorial Vignette:\\  Identifying and Visualizing Significantly Responsive Branches in a Phylogenetic Tree}
 \author{John R. Stevens$^1$, Todd R. Jones$^{2}$, and Michael Lefevre$^{3}$}
 
 \SweaveOpts{echo=TRUE}
@@ -46,7 +46,7 @@ These tools also allow additional exploration of the significance results.
 
 \vspace{3em}
 
-{\bf Note:} If you use this package please cite Stevens, Jones, and Lefevre (2014).
+{\bf Note:} If you use this package, please cite Stevens \emph{et al.} (2014).
 
 
 
@@ -413,7 +413,7 @@ Note that the root edge visible in the screenshot above can also be plotted in R
 If p-values are available for only a subset of the tips in a given phylogenetic tree, 
 or if there is some filter that is applied to restrict attention
 to such a subset, the tree can be ``pruned'' to include only those tips.
-This first uses the \Rfunction{prune\_species} function of the \Rpackage{phyloseq} package
+This first uses the \Rfunction{prune\_taxa} function of the \Rpackage{phyloseq} package
 to obtain the new tree:
 
 <<results=hide>>=
@@ -433,9 +433,36 @@ plotSigTree(new_tree, new_frame, pal=RdBu, tip.label.size=1.5,
             edge.width=4)
 @
 
-\section{Misc. Issues Dealing with Reading in Tree Files}
+\section{Misc. Issues}
 
-\subsection{NEXUS Format}
+\subsection{Visualizing Results of Multiple-Treatment Designs}
+\label{sn:multiple}
+
+Some users of \Rpackage{SigTree} have inquired regarding multiple-treatment designs, rather than
+two-treatment designs.  For example, consider a design with three treatment groups (T1, T2, T3),
+and suppose the researcher is interested in visualizing branches in the phylogenetic tree 
+that respond differently to the various treatments.  
+
+For each OTU, a single p-value for the global null ($H_0$: $\mu_{T1}=\mu_{T2}=\mu_{T3}$) 
+can be obtained, and \Rpackage{SigTree} tools can help visualize which branches of the
+phylogenetic tree exhibit \emph{any} differences among treatments.
+However, to visualize the specifics of those differences, 
+all pairwise comparisons among treatments
+must be considered separately.  This is because a branch could be significantly different
+between T1 and T2, but also significantly different between T2 and T3, and also between T1 and T3.
+In such a case, three colors (one for each pairwise comparison) could be overlayed on the tree, 
+but that would quickly cause confusion, especially for larger branches, 
+considering how SigTree combines
+p-values (for a single comparison) within branches to get a branch-level p-value (for that same 
+single comparison).   Instead, a separate colored tree is needed for each pairwise comparison
+(T1 vs. T2, T2 vs. T3, and T1 vs. T3).  
+
+While it might seem awkward to have multiple
+displayed trees, this approach does give the most direct (and honest) visualization of the specific
+differences with multiple treatment groups.
+
+
+\subsection{Reading in NEXUS Format Tree Files}
 \label{sn:nexus}
 
 The .tre file created by the \Rfunction{export.figtree} function in Section \ref{section:resultsFigTree}
@@ -459,7 +486,7 @@ Use \Rfunction{read.nexus} to read in this format of .tre file:
 sig_tree <- read.nexus("sigsample.tre")
 @
 
-\subsection{Singleton Node Error}
+\subsection{Singleton Node Error When Reading in Tree Files}
 
 If a tree has a singleton node, it cannot be read in to R in the usual way.
 There is such a \Rfunction{singletonsample.tre} file with the \Rpackage{SigTree} package. 
@@ -544,10 +571,10 @@ without the problematic singleton node.
  ``A Consensus Combined P-Value Test and the Family-Wide Significance of Component Tests,''
  {\it Biometrics} 46(2):303-308.
 
- \bibitem{Stevens2013}
- Stevens J.R., Jones T.R., and Lefevre M.L. (2014),
- ``SigTree: finding significantly responsive branches in a phylogenetic tree,''
- manuscript in preparation.
+ \bibitem{Stevens2014}
+ Stevens J.R., Jones T.R., Lefevre M.L., Ganesan B., and Weimer B.C. (2014),
+ ``SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree,''
+ manuscript submitted December 2014.
 
  \bibitem{Stouffer1949}
  Stouffer S.A., Suchman E.A., DeVinney L.C., Star S.A., and Williams Jr. R.M. (1949),

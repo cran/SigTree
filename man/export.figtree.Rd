@@ -72,7 +72,7 @@ To access the tutorial document for this package (including this function), type
 This function creates a \code{NEXUS} file that can be opened by the program \code{FigTree}.
 }
 \references{
-Stevens J.R., Jones T.R., and Lefevre M. (2013) "SigTree: finding significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2014) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript submitted).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 

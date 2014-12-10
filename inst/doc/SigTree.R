@@ -149,26 +149,26 @@ plotSigTree(new_tree, new_frame, pal=RdBu, tip.label.size=1.5,
 
 
 ###################################################
-### code chunk number 21: SigTree.Rnw:444-445 (eval = FALSE)
+### code chunk number 21: SigTree.Rnw:471-472 (eval = FALSE)
 ###################################################
 ## sig_tree <- read.tree("sigsample.tre")
 
 
 ###################################################
-### code chunk number 22: SigTree.Rnw:458-459
+### code chunk number 22: SigTree.Rnw:485-486
 ###################################################
 sig_tree <- read.nexus("sigsample.tre")
 
 
 ###################################################
-### code chunk number 23: SigTree.Rnw:467-469 (eval = FALSE)
+### code chunk number 23: SigTree.Rnw:494-496 (eval = FALSE)
 ###################################################
 ## singletontree.file <- paste(tre.path,"singletonsample.tre",sep="/")
 ## tree <- read.tree(singletontree.file)
 
 
 ###################################################
-### code chunk number 24: SigTree.Rnw:487-500 (eval = FALSE)
+### code chunk number 24: SigTree.Rnw:514-527 (eval = FALSE)
 ###################################################
 ## t1 <- read.table(singletontree.file)
 ## # remove initial (
