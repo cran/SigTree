@@ -55,7 +55,7 @@ To access the tutorial document for this package (including this function), type
 This function produces a \code{CSV} file; alternatively, if \code{frame=TRUE}, this function will return a \code{data.frame} object.
 }
 \references{
-Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2014) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript submitted).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2015) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 

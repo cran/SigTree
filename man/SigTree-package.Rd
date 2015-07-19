@@ -13,8 +13,8 @@ Determine significantly responsive branches in phylogenetic trees
 \tabular{ll}{
 Package: \tab SigTree\cr
 Type: \tab Package\cr
-Version: \tab 1.7\cr
-Date: \tab 2014-12-10\cr
+Version: \tab 1.10.2\cr
+Date: \tab 2015-07-18\cr
 License: \tab GPL-3\cr
 }
 For more information, see the documentation for 
@@ -32,7 +32,7 @@ John R. Stevens <john.r.stevens@usu.edu>
 }
 \references{
 
-Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2014) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript submitted).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2015) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 

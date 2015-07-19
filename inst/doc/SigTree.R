@@ -125,13 +125,14 @@ br106[1,t]
 
 
 ###################################################
-### code chunk number 18: SigTree.Rnw:393-394
+### code chunk number 18: SigTree.Rnw:393-395
 ###################################################
+library(phyext2) 
 export.figtree(tree, frame, pal=RdBu, file="sigsample.tre")
 
 
 ###################################################
-### code chunk number 19: SigTree.Rnw:419-423
+### code chunk number 19: SigTree.Rnw:420-424
 ###################################################
 keep.taxa <- c("t57","t99","t53","t62","t39","t16",
                "t63","t67","t45","t1","t34","t82")
@@ -140,7 +141,7 @@ new_tree <- prune_taxa(keep.taxa, tree)
 
 
 ###################################################
-### code chunk number 20: SigTree.Rnw:429-433
+### code chunk number 20: SigTree.Rnw:430-434
 ###################################################
 t <- is.element(frame$OTU, keep.taxa)
 new_frame <- frame[t,]
@@ -149,26 +150,26 @@ plotSigTree(new_tree, new_frame, pal=RdBu, tip.label.size=1.5,
 
 
 ###################################################
-### code chunk number 21: SigTree.Rnw:471-472 (eval = FALSE)
+### code chunk number 21: SigTree.Rnw:472-473 (eval = FALSE)
 ###################################################
 ## sig_tree <- read.tree("sigsample.tre")
 
 
 ###################################################
-### code chunk number 22: SigTree.Rnw:485-486
+### code chunk number 22: SigTree.Rnw:486-487
 ###################################################
 sig_tree <- read.nexus("sigsample.tre")
 
 
 ###################################################
-### code chunk number 23: SigTree.Rnw:494-496 (eval = FALSE)
+### code chunk number 23: SigTree.Rnw:495-497 (eval = FALSE)
 ###################################################
 ## singletontree.file <- paste(tre.path,"singletonsample.tre",sep="/")
 ## tree <- read.tree(singletontree.file)
 
 
 ###################################################
-### code chunk number 24: SigTree.Rnw:514-527 (eval = FALSE)
+### code chunk number 24: SigTree.Rnw:515-528 (eval = FALSE)
 ###################################################
 ## t1 <- read.table(singletontree.file)
 ## # remove initial (

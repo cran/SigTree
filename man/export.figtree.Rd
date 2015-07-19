@@ -72,7 +72,7 @@ To access the tutorial document for this package (including this function), type
 This function creates a \code{NEXUS} file that can be opened by the program \code{FigTree}.
 }
 \references{
-Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2014) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript submitted).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2015) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
@@ -93,7 +93,7 @@ John R. Stevens and Todd R. Jones
 node.size <- 10
 seed <- 109
 # Create tree
-set.seed(seed);
+set.seed(seed)
 library(ape)
 r.tree <- rtree(node.size)
 # Create p-values data frame
@@ -106,6 +106,7 @@ r.tip.label <- sample(r.tree$tip.label, size=length(r.tree$tip.label))
 r.pvalues <- data.frame(label=r.tip.label, pval=r.pval)
 
 # Export "ExportFigtree1.tre" file that can be opened in FigTree
+library(phyext2)
 export.figtree(r.tree, r.pvalues, test="Stouffers", file="ExportFigtree1.tre")
 
 }

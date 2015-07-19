@@ -132,8 +132,8 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	{
 		return(cat("Error: Value of branch must be either 'node' or 'edge'.","\n"))
 	}
-	#Use tree to create tree4d, a tree of class phylobase.
-	phylo4d(tree)->tree4d
+	#Use tree to create tree4d, a tree of class phylobase
+	tree4d <- phylo4d(tree)
 	#Use tree4d to create tree4dext, a tree of class phyext.
 	new("phylo4d_ext", tree4d)->tree4dext
 	#Get n.total.nodes, n.tips, results, and edgecolor from functions.
@@ -226,13 +226,12 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	#  called df which contains nodecolor[,3] in the first column and node.pval[,1] in
 	#  the second column and name those columns "nodecolor" and "pvalue."  Then we assign
 	#  df to tdata(tree4dext).
-	{if(edge.label)	
+	if(edge.label)	
 	{
 		df <- data.frame(nodecolor[,3], node.pval[,1])
 		names(df)[1:2] <- c("nodecolor", "pvalue")
 		tdata(tree4dext) <- df 
-	}
-	else	tdata(tree4dext) <- nodecolor[,3]}
+	} else {tdata(tree4dext) <- nodecolor[,3]}
 	#This code with op.warn is to suppress the warning messages.  After we have run the
 	#  line to get temptext, we reset the warn option to what it originally was.  Similar
 	#  with op.scipen.  Save the original parameter as op.scipen.  It has to do with when
@@ -247,9 +246,8 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	#  tdata(tree4dext) contains two files and version 1.5 handles this.  If edge.label is
 	#  FALSE, we only have onle column of tdata(tree4dext) and we can use the older
 	#  version.  The regular expression code is different based on the value of edge.label.
-	{if(edge.label)  capture.output(write.nexus.simmap(tree4dext, vers=1.5), file = NULL, 
-		append = FALSE)->temptext
-	else	capture.output(write.nexus.simmap(tree4dext), file = NULL, 
+	if(edge.label) { capture.output(write.nexus.simmap(tree4dext, vers=1.5), file = NULL, 
+		append = FALSE) -> temptext } else {capture.output(write.nexus.simmap(tree4dext), file = NULL, 
 		append = FALSE) -> temptext}
 	#Set the options back to what they were before we changed them.
 	options(warn=op.warn, scipen=op.scipen)
@@ -263,7 +261,7 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	#  in the exported file for Figtree.  If not, we don't include the 0.  If
 	#  ignore.edge.length is true, we go to the else statement that doesn't include the
 	#  edge lengths.	
-	{if(edge.label)
+	if(edge.label)
 	{	
 		{if(hasEdgeLength(tree4dext) & ignore.edge.length==FALSE)
 		{
@@ -277,7 +275,7 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 				gsub(":\\[&nodecolor=\\{([0-9]+)\\},pvalue=\\{([0-9\\.]+)\\}\\]([0-9\\.]+)", 
 				"\\[&!color=#\\1, P-value=\"\\2\\\"]", temptext[length.temptext-1])	
 		}}	
-	}	
+	} 
 	#If edge.label==FALSE, then we go to this else statement, which uses regular
 	#  expressions to change temptext[length.temptext-1] to be in a format that figtree
 	#  can read and use the color information.  We also need to test to see if tree4dext
@@ -298,6 +296,6 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 			"[&!color=#\\1]", temptext[length.temptext-1])
 		}}
 			
-	}}
+	}
 	write(temptext, file=file)
 }

@@ -3,7 +3,7 @@
 %\VignetteDepends{SigTree,ape,phyloseq}
 %\VignettePackage{SigTree}
 \documentclass[12pt, a4paper]{article}
-
+ 
 \title{\Rpackage{SigTree} Tutorial Vignette:\\  Identifying and Visualizing Significantly Responsive Branches in a Phylogenetic Tree}
 \author{John R. Stevens$^1$, Todd R. Jones$^{2}$, and Michael Lefevre$^{3}$}
 
@@ -46,9 +46,9 @@ These tools also allow additional exploration of the significance results.
 
 \vspace{3em}
 
-{\bf Note:} If you use this package, please cite Stevens \emph{et al.} (2014).
+{\bf Note:} If you use this package, please cite Stevens \emph{et al.} (2015).
 
-
+ 
 
 
 \newpage
@@ -391,6 +391,7 @@ can be exported in a format that can be viewed in FigTree (Rambaut, 2009) by usi
 (with default \Rfunction{branch="edge"}):
 
 <<>>=
+library(phyext2) 
 export.figtree(tree, frame, pal=RdBu, file="sigsample.tre")
 @
 
@@ -571,10 +572,10 @@ without the problematic singleton node.
  ``A Consensus Combined P-Value Test and the Family-Wide Significance of Component Tests,''
  {\it Biometrics} 46(2):303-308.
 
- \bibitem{Stevens2014}
- Stevens J.R., Jones T.R., Lefevre M.L., Ganesan B., and Weimer B.C. (2014),
+ \bibitem{Stevens2015}
+ Stevens J.R., Jones T.R., Lefevre M.L., Ganesan B., and Weimer B.C. (2015),
  ``SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree,''
- manuscript submitted December 2014.
+ manuscript in preparation.
 
  \bibitem{Stouffer1949}
  Stouffer S.A., Suchman E.A., DeVinney L.C., Star S.A., and Williams Jr. R.M. (1949),

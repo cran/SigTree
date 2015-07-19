@@ -1,3 +1,40 @@
+		CHANGES IN SigTree VERSION 1.10.2
+
+NEW FEATURES
+
+    o Included package vignette (removed in version 1.8).
+	
+
+
+	  CHANGES IN SigTree VERSION 1.10.1
+
+OTHER CHANGES
+
+    o Formalized package dependence on the "phyext2" package,
+	  which is now in CRAN.
+
+
+
+	  CHANGES IN SigTree VERSION 1.9
+
+OTHER CHANGES
+
+    o With permission of phyext package's former maintainer,
+	  made temporary copy package phyext2, and re-built package.
+
+
+
+		CHANGES IN SigTree VERSION 1.8
+
+NEW FEATURES
+
+    o Removed package vignette, to provide faster package checking.
+	
+OTHER CHANGES
+
+    o Minor updates to pass R CMD check
+
+
 		CHANGES IN SigTree VERSION 1.7
 
 NEW FEATURES
