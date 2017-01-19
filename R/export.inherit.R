@@ -1,7 +1,7 @@
 
 
 export.inherit <- function(tree, unsorted.pvalues, adjust=TRUE, side=1, 
-	method="hommel", file="", test="Stouffers", frame=FALSE, branch="edge")
+	method="hommel", file="", test="Stouffer", frame=FALSE, branch="edge")
 {
 #This is what one can reference the graph to in order to see which of the internal nodes
 #  contain which tips.  It exports a csv file that has the node number in column 1, its
@@ -20,7 +20,7 @@ export.inherit <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 #Argument: method is one of the methods found in p.adjust.methods and is the method to
 #  be used in the p.adjust function. 
 #Argument: file is the file path to export to.
-#Argument: test is either "Stouffers" or "Fishers."  This is the p-value combination
+#Argument: test is either "Stouffer" or "Hartung" or "Fisher."  This is the p-value combination
 #  to be used.
 #Argument: frame is a logical of whether or not to return a data.frame object (in addition to creating the file)
 #Argument: branch controls branch definition: "edge" or "node" are only options.  This
@@ -63,9 +63,9 @@ export.inherit <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	{
 		return(cat("Error: Value of method should be one of those found in p.adjust.methods"))
 	}
-	if(test!="Stouffers" & test!="Fishers")
+	if(test!="Stouffer" & test!="Fisher" & test!="Hartung")
 	{
-		return(cat("Error: Value of test must be either \"Stouffers\" or \"Fishers\".","\n"))
+		return(cat("Error: Value of test must be either \"Stouffer\" or \"Hartung\" or \"Fisher\".","\n"))
 	}
 	if(test=="Stouffers" & side==2)
 	{
@@ -122,10 +122,15 @@ export.inherit <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	Branch <- as.character(c(tree$tip.label,(n.tips+1):n.total.nodes))
 	new.inherit <- data.frame(Branch,results[,1], inherit)
 	#label the first column of new.inherit as "Branch"; label the second column as
-	#  "Stouffer's p-value" or "Fisher's p-value" depending on the value of test.
-	if(test=="Stouffers")
+	#  "Stouffer's p-value" or "Fisher's p-value" or "Hartung's p-value" depending on the value of test.
+	if(test=="Stouffer")
 	  {names(new.inherit)[2] <- "Stouffer's p-value"} else {
-   	   names(new.inherit)[2] <- "Fisher's p-value"}
+       if(test=="Fisher")
+         {names(new.inherit)[2] <- "Fisher's p-value"} else {
+             names(new.inherit)[2] <- "Hartung's p-value"
+          }
+
+      }
 	
 	# If branch='edge', need to re-number the branches
 	if(branch=="edge")

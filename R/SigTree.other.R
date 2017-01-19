@@ -146,7 +146,7 @@ p.p2.ADJ.p1 <- function(p, method)
 
 result <- function(tree, unsorted.pvalues, test, adjust, side, method)
 {
-#Calculate pvalues based on Stouffer's or Fisher's tests.  Return results, a data frame
+#Calculate pvalues based on Hartung's, Stouffer's, or Fisher's tests.  Return results, a data frame
 #  that contains this information.
 #Internal function
 #Arguments: One or more of the functions plotSigTree, export.inherit, and
@@ -166,7 +166,7 @@ result <- function(tree, unsorted.pvalues, test, adjust, side, method)
 	#  belonging to the jth column.  We then call the Stouffer's and Fisher's functions
 	#  on temp and assign the values we obtain to the first column of results.  Each row
 	#  of results represents a different node.  
-	if(test=="Stouffers")
+	if(test=="Stouffer")
 	{
 		for(j in 1:n.total.nodes)
 		{
@@ -175,13 +175,27 @@ result <- function(tree, unsorted.pvalues, test, adjust, side, method)
 			names(results)[1]<-"Stouffer's"
 		}
 	}else
-	{
-		for(j in 1:n.total.nodes)
-		{
-			temp <- sorted.pvalues[index[,j]==1,2]
-			results[j,1] <- fishers(temp)
-			names(results)[1]<-"Fisher's"
-		}
+	{  if(test=="Fisher")
+         {
+  		   for(j in 1:n.total.nodes)
+		    {
+  			  temp <- sorted.pvalues[index[,j]==1,2]
+			  results[j,1] <- fishers(temp)
+			  names(results)[1]<-"Fisher's"
+		    }
+         } else 
+               {
+                 if(test=="Hartung")
+                   {
+                      for(j in 1:n.total.nodes)
+		                 {
+  			               temp <- sorted.pvalues[index[,j]==1,2]
+			               results[j,1] <- hartung(temp)
+			               names(results)[1]<-"Hartung's"
+		                  }
+                    } else{return(NULL)}
+                }
+
 	}
 	#Now we need to apply the p-value adjustment if the adjust argument is TRUE.  If
 	#	not, this step is skipped. Afterwards, results is returned.
@@ -853,6 +867,40 @@ function (edge, Ntip, Nnode, xx, yy, theta, r, edge.color, edge.width,
 	    lines(c(X2[1]*cos(Y2[1]), 0), c(X2[1]*sin(Y2[1]), 0), col=root.edge.col, lwd=lw2[Nnode], lty=ly2[Nnode])
 	 }
 		
+}
+
+
+### Hartung's p-value combination, allowing constant
+### dependence among all pairs of tests
+### (and here, assuming equal weights).
+### Argument pvec is a vector of (one-sided) p-values.
+### Argument return.rho is a logical for whether or not
+###   to return the estimated value of rho for the set of p-values.
+###   (rho is the constant correlation assumed among the tests).
+### Argument rho.floor is the minimum possible value of rho. The default
+##    is to restrict rho to the range allowing positive definite covariance,
+##    but could be set higher, such as zero.
+hartung <- function (pvec, return.rho=FALSE,rho.floor=NULL) 
+{
+    n <- length(pvec)
+	if(is.null(rho.floor)){rho.floor <- -1/(n-1)}
+	if(n>1)
+	 {
+      t <- qnorm(pvec)
+      rho.hat <- 1 - var(t)
+      rho.hat.star <- max(-1/(n - 1), rho.hat)
+      #kappa <- (1 + 1/(n - 1) - rho.hat.star) * 0.1  # this is Hartung's kappa_2
+	  kappa <- 0.2 # this is Hartung's kappa_1
+	  t.star <- sum(t) / sqrt( n + (n^2 - n)*(rho.hat.star + kappa*sqrt(2/(n+1))*(1-rho.hat.star))  )
+      if(!return.rho)
+	    {return(pnorm(t.star))} else 
+	    {out <- c(pnorm(t.star),rho.hat.star)
+		 names(out) <- c('pval','rho.hat.star')
+		 return(out)
+		 }
+	 } else {
+	          return(pvec)
+	         }
 }
 
 

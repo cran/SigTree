@@ -46,7 +46,7 @@ These tools also allow additional exploration of the significance results.
 
 \vspace{3em}
 
-{\bf Note:} If you use this package, please cite Stevens \emph{et al.} (2016).
+{\bf Note:} If you use this package, please cite Stevens \emph{et al.} (2017).
 
  
 
@@ -164,25 +164,41 @@ First, load the \Rpackage{SigTree} package:
 library(SigTree)
 @
 
-The \Rpackage{SigTree} package has the following three main functions:
+The \Rpackage{SigTree} package has the following four main functions:
 \begin{itemize}
+  \item \Rfunction{adonis.tree}
   \item \Rfunction{plotSigTree}
   \item \Rfunction{export.inherit}
   \item \Rfunction{export.figtree}
 \end{itemize}
-All three rely on the same main inputs and arguments and are demonstrated in this package tutorial.
+All four rely on the same main inputs and arguments and are demonstrated in this package tutorial.
 
-Run the \Rfunction{plotSigTree} function with default arguments:
+First, the \Rfunction{adonis.tree} function can be used to test whether the p-values at the tips are
+independent or dependent (specifically, whether there are significant differences among p-values, based
+on the between-tip distances in the phylogenetic tree).  This is based on the adonis test 
+(Reiss {\it et al.} 2010; Anderson, 2001), and returns a p-value for the null 
+``p-values are independent'' vs. the alternative ``p-value differences are associated with pairwise 
+distances'', as follows:
+
+<<>>=
+adonis.tree(tree,frame)
+@
+
+Based on this highly significant result, one could conclude that the p-values for these OTUs are not
+independent, which dependence can be accounted for in the subsequent meta-analytic steps using Hartung's
+p-value combination method (see below).
+
+Run the \Rfunction{plotSigTree} function with appropriate arguments:
 
 <<fig=TRUE>>=
-plotSigTree(tree, frame)
+plotSigTree(tree, frame, test="Hartung")
 @
 
 The \Rfunction{plotSigTree} package relies on a meta-analysis framework to systematically combine the p-values for all 
 OTUs within each branch in the phylogenetic tree, resulting in a single p-value for each branch.
 The resulting plot colors each branch (and tip label) according to its
 p-value.  For much more discussion on this meta-analysis framework and function options, see Jones (2012).
-Briefly, there are two competing meta-analysis approaches to combine p-values used here:
+Briefly, there are three competing meta-analysis approaches to combine p-values used here:
 \begin{itemize}
   \item Fisher's method (Fisher, 1932). In the context of the current example 
         (where $H_0: \mu_C = \mu_T$ vs. $H_A: \mu_C < \mu_T$ is tested for each OTU separately in a given branch),
@@ -193,12 +209,18 @@ Briefly, there are two competing meta-analysis approaches to combine p-values us
         (Rice, 1990; Whitlock, 2005) among p-values in the branch.
         It can be considered to test the null ``$\mu_C = \mu_T$ for all OTUs in the branch'' vs. the alternative
         ``there is a consensus among OTUs in the branch that $\mu_C < \mu_T$.''
+        Stouffer's method implicitly assumes independent p-values.
+  \item Hartung's method (Hartung, 1999).  This is a generalized version of Stouffer's method,
+        and allows dependence among p-values.  Hartung assumes a constant (and nonnegative) correlation among
+        all pairs of p-values, and shows that results are stable even when the correlation is non-constant.
 \end{itemize}
 
 Because the intent of the \Rpackage{SigTree} package is to aid in identifying 
 ``which branches of the phylogenetic tree exhibit an \underline{overall} significant
         response to the intervention'' (Section \ref{Intro}), 
 Stouffer's method is the recommended (and default) p-value combination method.
+In the event that \Rfunction{adonis.tree} shows significant evidence of dependence among p-values,
+Hartung's method is recommended (as a generalized version of Stouffer's method).
 Fisher's method can be used instead using the \Rfunction{test} argument in the \Rfunction{plotSigTree} function.
 
 \subsection{Package Features}
@@ -216,7 +238,8 @@ The default color palette (for one-sided p-values as in the current example)
 library(RColorBrewer)
 RdBu <- brewer.pal(7, "RdBu")
 RdBu[4] <- brewer.pal(7, "Greys")[3]
-plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2)
+plotSigTree(tree, frame, test="Hartung",pal=RdBu, tip.label.size=.8, 
+            edge.width=2)
 legend("topright",c("C > T","C < T"),cex=1.5,text.col=RdBu[c(7,1)],bty="n")
 @
 
@@ -241,7 +264,7 @@ In cases where a two-sided test was made on each OTU, then the \Rfunction{side} 
 can be used to specify the situation.  (The following code is not run here.)
 
 <<eval=FALSE>>=
-plotSigTree(tree, frame, side=2)
+plotSigTree(tree, frame, test="Hartung", side=2)
 @
 
 In such a case, there is only one significance threshold $\alpha$, 
@@ -251,12 +274,16 @@ Returning to the current example (with its one-sided alternative), a legend can 
 to communicate the translation of color to p-value range:
 
 <<fig=TRUE>>=
-plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2)
+plotSigTree(tree, frame, test="Hartung", pal=RdBu, tip.label.size=.8, 
+            edge.width=2)
 p.cut.leg <- c("0.00 - 0.01","0.01 - 0.05","0.05 - 0.10",
                "0.10 - 0.90","0.90 - 0.95","0.95 - 0.99","0.99 - 1.00")
 legend("topright",rev(p.cut.leg),text.col=rev(RdBu), bty="n", cex=1)
 @
 
+If package users have more traditional two-sided p-values, and also have (for each OTU) a mean difference
+(or other value indicating direction of difference as positive or negative), the function \Rfunction{p2.p1} can be used
+to convert to one-sided p-values.
 
 \subsubsection{Branch Definition and Color}
 
@@ -295,8 +322,8 @@ See Section \ref{section:givenbranch} for a discussion of how to explore OTUs wi
 
 
 <<fig=TRUE>>=
-plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2, 
-            branch="node")
+plotSigTree(tree, frame, test="Hartung", pal=RdBu, tip.label.size=.8, 
+            edge.width=2, branch="node")
 p.cut.leg <- c("0.00 - 0.01","0.01 - 0.05","0.05 - 0.10",
                "0.10 - 0.90","0.90 - 0.95","0.95 - 0.99","0.99 - 1.00")
 legend("topright",rev(p.cut.leg),text.col=rev(RdBu), bty="n", cex=1)
@@ -326,7 +353,7 @@ If instead the user wanted to control the false discovery rate while allowing de
 the adjustment of Benjamini and Yekutieli (2001) could be used:
 
 <<fig=TRUE>>=
-plotSigTree(tree, frame, method="BY")
+plotSigTree(tree, frame, test="Hartung", method="BY")
 @
 
 
@@ -343,8 +370,8 @@ the right side.  Each interior branch of the tree has a number, and these number
 by using the \Rfunction{branch.label=TRUE} option (with label sizes adjustable):
 
 <<fig=TRUE>>=
-plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2, 
-            branch.label=TRUE, branch.label.size=.75)
+plotSigTree(tree, frame, test="Hartung", pal=RdBu, tip.label.size=.8, 
+            edge.width=2, branch.label=TRUE, branch.label.size=.75)
 edgelabels(edge=176,frame="circ",bg="yellow",cex=.8)
 @
 
@@ -354,13 +381,13 @@ First, we could create a .csv file summarizing the p-value and member OTUs of ea
 (this code is not run here):
 
 <<eval=FALSE>>=
-export.inherit(tree, frame, file="sampleInherit.csv")
+export.inherit(tree, frame, test="Hartung", file="sampleInherit.csv")
 @
 
 Alternatively, we could look at the contents of this file in R by using the \Rfunction{frame=TRUE} option:
 
 <<>>=
-temp <- export.inherit(tree, frame, frame=TRUE)
+temp <- export.inherit(tree, frame, test="Hartung", frame=TRUE)
 @
 
 This \Rfunction{temp} object is a data frame, with a row for each branch (or tip) in the tree, and
@@ -373,7 +400,7 @@ br176[1,t]
 @
 
 The OTUs in branch 176 are t57, t99, t53, t62, t39, t16, t63, t67, t45, t1, t34, and t82.
-Overall, this family of OTUs has significant consensus (Hommel-adjusted p-value $\approx$ 8.7e-11) that $\mu_C < \mu_T$.
+Overall, this family of OTUs has significant consensus (Hommel-adjusted p-value $\approx$ 1.7e-11) that $\mu_C < \mu_T$.
 
 This result can be compared with the larger (and less significant) family of OTUs corresponding to branch 106:
 
@@ -392,7 +419,7 @@ can be exported in a format that can be viewed in FigTree (Rambaut, 2009) by usi
 
 <<>>=
 library(phyext2) 
-export.figtree(tree, frame, pal=RdBu, file="sigsample.tre")
+export.figtree(tree, frame, test="Hartung", pal=RdBu, file="sigsample.tre")
 @
 
 The resulting \Rfunction{sigsample.tre} file will be in NEXUS format.
@@ -401,6 +428,20 @@ For example, the p-values of a selected branch can be viewed in FigTree
 by selecting ``Annotate'' and then ``Annotation = P-value''.
 The following screenshot shows a sample result for branch 106
 (showing the same combined p-value as at the end of Section \ref{section:givenbranch}):
+
+
+% - include FigTree screenshot showing p-value annotation for node 154
+% - Get this sigsampleFigTree.jpg file by:
+%   - open sigsample.tre file in FigTree, and edit:
+%      Polar tree layout
+%      Tip Labels (Font Size 22)
+%      Scale Bar (remove)
+%      Appearance (Line Weight 8)
+%      Select branch (Highlight pale yellow), 
+%          Annotate --> Annotation=P-value, and position box
+%      Print Screen, paste in Word, crop there (and compress --> delete cropped areas), 
+%         and rt-click --> Save as Picture (sigsampleFigTree.jpg file)
+
 
 \begin{center}
 \includegraphics{sigsampleFigTree.jpg}
@@ -430,7 +471,7 @@ for each OTU must have exactly the same OTU names as the tips in the tree:
 <<fig=TRUE>>=
 t <- is.element(frame$OTU, keep.taxa)
 new_frame <- frame[t,]
-plotSigTree(new_tree, new_frame, pal=RdBu, tip.label.size=1.5, 
+plotSigTree(new_tree, new_frame, test="Hartung", pal=RdBu, tip.label.size=1.5, 
             edge.width=4)
 @
 
@@ -473,7 +514,7 @@ can be read back in to R, but using the \Rfunction{read.tree} function will resu
 sig_tree <- read.tree("sigsample.tre")
 @
 
-\vspace{-2.5em}
+\vspace{-1.5em}
 
 \begin{verbatim}
 Error in if (tp[3] != "") obj$node.label <- tp[3] : 
@@ -537,6 +578,10 @@ without the problematic singleton node.
 
 \begin{thebibliography}{80}
 
+ \bibitem{Anderson2001}
+ Anderson, M.J. (2001) ``A new method for non-parametric multivariate analysis of variance,''
+ {\it Austral Ecology} 26:32-46.
+
  \bibitem{Blakesley2009}
  Blakesley R.E., Mazumdar S., Dew M.A., Houck P.R., Tang G., Reynolds C.F., and Butters M.A. (2009),
  ``Comparisons of Methods for Multiple Hypothesis Testing in Neurophsychological Research,''
@@ -546,6 +591,10 @@ without the problematic singleton node.
  Fisher R.A. (1932),
  {\it Statistical Methods for Research Workers}, 4th ed.
  Oliver and Boyd, Edinburgh.
+
+ \bibitem{Hartung1999}
+ Hartung J. (1999) ``A Note on Combining Dependent Tests of Significance,''
+ {\it Biometrical Journal} 41(7):849-855.
 
  \bibitem{Hommel1988}
  Hommel G. (1988),
@@ -567,12 +616,16 @@ without the problematic singleton node.
  ``FigTree,''
  \verb7http://tree.bio.ed.ac.uk/software/figtree7
 
+ \bibitem{Reiss2010}
+ Reiss P.T., Stevens M.H.H., Shehzad Z., Petkova E., and Milham M.P. (2010) ``On Distance-Based Permutation
+ Tests for Between-Group Comparisons,'' {\it Biometrics} 66:636-643.
+
  \bibitem{Rice1990}
  Rice W.R. (1990),
  ``A Consensus Combined P-Value Test and the Family-Wide Significance of Component Tests,''
  {\it Biometrics} 46(2):303-308.
 
- \bibitem{Stevens2016}
+ \bibitem{Stevens2017}
  Stevens J.R., Jones T.R., Lefevre M.L., Ganesan B., and Weimer B.C. (2016),
  ``SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree,''
  manuscript in preparation.

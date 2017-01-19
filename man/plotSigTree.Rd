@@ -5,7 +5,10 @@
 }
 \description{
 \code{plotSigTree} takes \code{tree} and \code{unsorted.pvalues} and computes p-values for each branch (family
- of tips) and colors the corresponding descendant branches.  It computes the p-values based on arguments involving p-value adjustment (for multiple hypothesis testing) and either Stouffer's or Fisher's p-value combination method.  There are arguments that allow for the customization of the p-value cutoff ranges as well as the colors to be used in the coloring of the branches.
+ of tips) and colors the corresponding descendant branches.  It computes the p-values based on arguments 
+ involving p-value adjustment (for multiple hypothesis testing) and either Hartung's, Stouffer's, or Fisher's 
+ p-value combination method.  There are arguments that allow for the customization of the p-value cutoff 
+ ranges as well as the colors to be used in the coloring of the branches.
 
 }
 \usage{
@@ -14,7 +17,7 @@ plotSigTree(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	c(.01, .05, .1, .9, .95, .99), c(.01, .05, .1)),
 	pal=ifelse(rep(side==1, ifelse(side==1, 1, length(p.cutoffs)+1)),
 	"RdBu", rev(brewer.pal(length(p.cutoffs)+1,"Reds"))),
-	test="Stouffers", branch.label=FALSE, tip.color=TRUE, edge.color=TRUE,
+	test="Stouffer", branch.label=FALSE, tip.color=TRUE, edge.color=TRUE,
 	tip.label.size=1, branch.label.size=1,  type="fan",
 	use.edge.length=TRUE, edge.width=1, branch="edge", 
 	root.edge=ifelse(type=="fan",FALSE,TRUE),
@@ -44,7 +47,7 @@ a vector of increasing p-value cutoffs (excluding 0 and 1) to determine the rang
 one of the palettes from the RColorBrewer package (see \code{brewer.pal.info} for a list) or a vector of hexadecimal colors (or other valid \code{R} colors).  These are the colors that are used to color the branches.  The first color corresponds to the first range in p.cutoffs and so on.
 }
   \item{test}{
-a character string taking on either \code{"Stouffers"} or \code{"Fishers"}.  This is the p-value combination method that will be used.
+a character string taking on \code{"Hartung"}, \code{"Stouffer"}, or \code{"Fisher"}.  This is the p-value combination method that will be used.  In most cases, "Stouffer" will be most appropriate, unless \code{adonis.tree} indicates significant evidence of dependence among p-values, in which case "Hartung" is preferred.
 }
   \item{branch.label}{
 a logical argument that controls whether the branches are labeled (\code{TRUE}) or not (\code{FALSE}). This results in either edges or nodes being labeled, depending on the \code{branch} argument.  The edge and node labeling is internal to class \code{phylo}, and are not necessarily sequential numbers.  When \code{branch="edge"} is used, the tip edges are not labeled (to avoid clutter).  Branch labels match those returned by \code{export.inherit}.
@@ -98,7 +101,7 @@ This function produces a phylogenetic tree plot.
 }
 \references{
 
-Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2015) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2017) "SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
@@ -136,6 +139,11 @@ r.pval <- rbeta(node.size, .1, .1)
 set.seed(seed)
 r.tip.label <- sample(r.tree$tip.label, size=length(r.tree$tip.label))
 r.pvalues <- data.frame(label=r.tip.label, pval=r.pval)
+
+# Check for dependence among p-values; lack of significance here
+# indicates default test="Stouffer" is appropriate; 
+# otherwise, test="Hartung" would be more appropriate.
+adonis.tree(r.tree,r.pvalues)
 
 # Plot tree in default 'fan' type, with branches labeled
 plotSigTree(r.tree, r.pvalues, edge.width=4, branch.label=TRUE)

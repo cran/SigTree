@@ -11,7 +11,7 @@ p-values are computed based on arguments involving p-value adjustment (for multi
 }
 \usage{
 export.inherit(tree, unsorted.pvalues, adjust = TRUE, side = 1, method = "hommel",
-file = "", test = "Stouffers", frame = FALSE, branch="edge")
+file = "", test = "Stouffer", frame = FALSE, branch="edge")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,7 +34,7 @@ one of the p-value adjustment methods (used for multiple-hypothesis testing) fou
 the file path for the \code{CSV} file to be written to.  If \code{frame=TRUE}, no CSV file is created.  If \code{frame=FALSE}, a CSV file will only be created if \code{file} is specified. 
 }
   \item{test}{
-a character string taking on either \code{"Stouffers"} or \code{"Fishers"}.  This is the p-value combination method that will be used.
+a character string taking on \code{"Hartung"}, \code{"Stouffer"}, or \code{"Fisher"}.  This is the p-value combination method that will be used.  In most cases, "Stouffer" will be most appropriate, unless \code{adonis.tree} indicates significant evidence of dependence among p-values, in which case "Hartung" is preferred.
 }
   \item{frame}{
 a logical argument that controls whether or not to return (in R) the resulting \code{data.frame} object. If FALSE, \code{file} must be specified.  
@@ -55,7 +55,7 @@ To access the tutorial document for this package (including this function), type
 This function produces a \code{CSV} file; alternatively, if \code{frame=TRUE}, this function will return a \code{data.frame} object.
 }
 \references{
-Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2015) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2017) "SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
@@ -85,6 +85,11 @@ r.pval <- rbeta(node.size, .1, .1)
 set.seed(seed)
 r.tip.label <- sample(r.tree$tip.label, size=length(r.tree$tip.label))
 r.pvalues <- data.frame(label=r.tip.label, pval=r.pval)
+
+# Check for dependence among p-values; lack of significance here
+# indicates default test="Stouffer" is appropriate; 
+# otherwise, test="Hartung" would be more appropriate.
+adonis.tree(r.tree,r.pvalues)
 
 # Create CSV file called "ExportInherit1.csv"
 export.inherit(r.tree, r.pvalues, test="Stouffers", file="ExportInherit1.csv")

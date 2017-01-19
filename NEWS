@@ -1,3 +1,21 @@
+	  CHANGES IN SigTree VERSION 1.10.4
+
+NEW FEATURES
+
+    o Added ability to test for distance-based dependence
+      (adonis.tree function), and account for dependence among
+      p-values (test="Hartung" in main functions like plotSigTree).
+
+    o Updated export.figtree function to use hexadecimal
+      colors, based on changes to recent FigTree version.
+      (Now fully compatible with FigTree version 1.4.3)
+
+OTHER CHANGES
+
+    o Updated citation and package vignette.
+
+
+
 	  CHANGES IN SigTree VERSION 1.10.3
 
 OTHER CHANGES

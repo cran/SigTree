@@ -3,7 +3,7 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	c(.01, .05, .1, .9, .95, .99), c(.01, .05, .1)), file="", 
 	pal=ifelse(rep(side==1, ifelse(side==1, 1, length(p.cutoffs)+1)),
 	"RdBu", rev(brewer.pal(length(p.cutoffs)+1,"Reds"))),
-	test = "Stouffers", edge.label=TRUE, ignore.edge.length=FALSE,
+	test = "Stouffer", edge.label=TRUE, ignore.edge.length=FALSE,
 	branch="edge")
 {
 #Creates a file that can be loaded in figtree.  The branches are colored in figtree and
@@ -43,7 +43,7 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 #  means that the light colors correspond to low p-values.  This is why the default
 #  palette when side is 2 is a reversed version of "Reds", so that the darker reds
 #  correspond to the lower p-values.
-#Argument: test is either "Stouffers" or "Fishers."  This is the p-value combination to
+#Argument: test is either "Stouffers" or "Fishers" or "Hartung".  This is the p-value combination to
 #  be used.
 #Argument: edge.label is a logical argument.  When TRUE, the edges in FigTree will have
 #  annotations with P-values corresponding to the p-value for the node they connect
@@ -108,15 +108,15 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	{
 		return(cat("Error: the numbers of colors in pal must be one more than the number of values in p.cutoffs.","\n"))
 	}
-	if(test!="Stouffers" & test!="Fishers")
+	if(test!="Stouffer" & test!="Fisher" & test!="Hartung")
 	{
-		return(cat("Error: Value of test must be either \"Stouffers\" or \"Fishers\".","\n"))
+		return(cat("Error: Value of test must be either \"Stouffer\" or \"Hartung\" or \"Fisher\".","\n"))
 	}
-	if(test=="Stouffers" & side==2)
+	if(test=="Stouffer" & side==2)
 	{
 		cat("Caution: Stouffer's Method is designed for 1-sided p-values.", "\n\n")
 	}
-	if(test=="Fishers" & side==1)
+	if(test=="Fisher" & side==1)
 	{
 		cat("Caution: For Fisher's Method applied to one-tailed p-values, significance thresholds for small p-values (near 0) are more meaningful than for large p-values (near 1).", "\n\n")
 	}
@@ -228,7 +228,9 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	#  df to tdata(tree4dext).
 	if(edge.label)	
 	{
-		df <- data.frame(nodecolor[,3], node.pval[,1])
+#!#		df <- data.frame(nodecolor[,3], node.pval[,1])
+#!# To accomodate FigTree colour scheme changes, Jan. 2017 changed preceding line to the following:
+		df <- data.frame(nodecolor[,2], node.pval[,1])
 		names(df)[1:2] <- c("nodecolor", "pvalue")
 		tdata(tree4dext) <- df 
 	} else {tdata(tree4dext) <- nodecolor[,3]}
@@ -266,13 +268,15 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 		{if(hasEdgeLength(tree4dext) & ignore.edge.length==FALSE)
 		{
 			temptext[length.temptext-1] <- 
-				gsub(":\\[&nodecolor=\\{([0-9]+)\\},pvalue=\\{([0-9\\.]+)\\}\\]([0-9\\.]+)", 
+#!#				gsub(":\\[&nodecolor=\\{([0-9]+)\\},pvalue=\\{([0-9\\.]+)\\}\\]([0-9\\.]+)", 
+#!# To accomodate FigTree colour scheme changes, Jan. 2017 changed preceding line to the following: (with similar changes in three remaining gsub calls)
+				gsub(":\\[&nodecolor=\\{([[:xdigit:]]{6})\\},pvalue=\\{([0-9\\.]+)\\}\\]([0-9\\.]+)", 
 				"\\[&!color=#\\1, P-value=\"\\2\\\"]:\\3", temptext[length.temptext-1])
 		}
 		else
 		{
 			temptext[length.temptext-1] <- 
-				gsub(":\\[&nodecolor=\\{([0-9]+)\\},pvalue=\\{([0-9\\.]+)\\}\\]([0-9\\.]+)", 
+				gsub(":\\[&nodecolor=\\{([[:xdigit:]]{6})\\},pvalue=\\{([0-9\\.]+)\\}\\]([0-9\\.]+)", 
 				"\\[&!color=#\\1, P-value=\"\\2\\\"]", temptext[length.temptext-1])	
 		}}	
 	} 
@@ -287,12 +291,12 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	{
 		{if(hasEdgeLength(tree4dext) & ignore.edge.length==FALSE)			
 		{	
-			temptext[length.temptext-1] <- gsub(":\\{([0-9\\.]+),*([0-9\\.]*)\\}", 
+			temptext[length.temptext-1] <- gsub(":\\{([[:xdigit:]]{6}),*([0-9\\.]*)\\}", 
 			"[&!color=#\\1]:\\2", temptext[length.temptext-1])
 		}	
 		else 
 		{
-			temptext[length.temptext-1] <- gsub(":\\{([0-9\\.]+),*([0-9\\.]*)\\}", 
+			temptext[length.temptext-1] <- gsub(":\\{([[:xdigit:]]{6}),*([0-9\\.]*)\\}", 
 			"[&!color=#\\1]", temptext[length.temptext-1])
 		}}
 			

@@ -2,6 +2,6 @@ citEntry(entry = "Article",
          "author" = "John R. Stevens and Todd R. Jones and Michael Lefevre and Balasubramanian Ganesan and Bart C. Weimer",
          "title" = "SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree",
          journal = "(Manuscript in preparation)",
-         year = "2016",
-         textVersion = "Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2016) SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree. (Manuscript submitted)"
+         year = "2017",
+         textVersion = "Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2017) SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree. (Manuscript in preparation)"
 ) 

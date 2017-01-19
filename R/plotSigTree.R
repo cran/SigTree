@@ -3,7 +3,7 @@ plotSigTree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	c(.01, .05, .1, .9, .95, .99), c(.01, .05, .1)),
 	pal=ifelse(rep(side==1, ifelse(side==1, 1, length(p.cutoffs)+1)),
 	"RdBu", rev(brewer.pal(length(p.cutoffs)+1,"Reds"))),
-	test="Stouffers", branch.label=FALSE, tip.color=TRUE, edge.color=TRUE,
+	test="Stouffer", branch.label=FALSE, tip.color=TRUE, edge.color=TRUE,
 	tip.label.size=1, branch.label.size=1,  type="fan",
 	use.edge.length=TRUE, edge.width=1, branch="edge", 
 	root.edge=ifelse(type=="fan",FALSE,TRUE),
@@ -49,7 +49,7 @@ plotSigTree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 #  means that the light colors correspond to low p-values.  This is why the default
 #  palette when side is 2 is a reversed version of "Reds", so that the darker reds
 #  correspond to the lower p-values.
-#Argument: test is either "Stouffers" or "Fishers."  This is the p-value combination to
+#Argument: test is either "Stouffer" or "Fisher" or "Hartung".  This is the p-value combination to
 #  be used.
 #Argument: branch.label is a logical parameter that displays numerical labels for the
 #  branches (node or edge, depending on the branch argument) when TRUE
@@ -133,15 +133,15 @@ plotSigTree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	{
 		return(cat("Error: The numbers of colors in pal must be one more than the number of values in p.cutoffs.","\n"))
 	}
-	if(test!="Stouffers" & test!="Fishers")
+	if(test!="Stouffer" & test!="Fisher" & test !="Hartung")
 	{
-		return(cat("Error: Value of test must be either \"Stouffers\" or \"Fishers\".","\n"))
+		return(cat("Error: Value of test must be either \"Hartung\" or \"Stouffer\" or \"Fisher\".","\n"))
 	}
-	#if(test=="Stouffers" & side==2)
+	#if(test=="Stouffer" & side==2)
 	#{
     #		cat("Caution: Stouffer's Method is designed for 1-sided p-values.", "\n")
 	#}
-	if(test=="Fishers" & side==1)
+	if(test=="Fisher" & side==1)
 	{
 		cat("Caution: For Fisher's Method applied to one-tailed p-values, significance thresholds for small p-values (near 0) are more meaningful than for large p-values (near 1).", "\n\n")
 	}
@@ -205,7 +205,7 @@ plotSigTree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	else if(!tip.color & edge.color)	plotphylo2(tree, tip.color="black", 
 		show.node.label=FALSE, edge.color=edgecolor, show.tip.label=TRUE, 
 		type=type, cex=tip.label.size, use.edge.length=use.edge.length, edge.width=edge.width, root.edge=root.edge)
-	else	plotphylo2(tree, tip.color="black", show.node.label=FALSE, edge.color="black", 
+	else plotphylo2(tree, tip.color="black", show.node.label=FALSE, edge.color="black", 
 		show.tip.label=TRUE, type=type, cex=tip.label.size,
 		use.edge.length=use.edge.length, edge.width=edge.width, root.edge=root.edge)}
 	#if the parameter branch.label is true, then we add labels to the branches.

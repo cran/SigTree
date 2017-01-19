@@ -8,6 +8,9 @@ import(phyext2)
 import(RColorBrewer)
 import(phyloseq)
 
-importFrom(graphics, segments, lines, par, strwidth, text, strheight)
+importFrom(graphics, segments, lines, par, strwidth, text, strheight, plot, abline)
 importFrom(utils, capture.output, write.csv)
-importFrom(stats, reorder, pchisq, p.adjust, median, uniroot, pnorm, qnorm)
+importFrom(stats, reorder, pchisq, p.adjust, median, uniroot, pnorm, qnorm, as.dist, cophenetic, var, wilcox.test, runif)
+importFrom(MASS, mvrnorm)
+
+import(vegan)

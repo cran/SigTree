@@ -17,7 +17,7 @@ export.figtree(tree, unsorted.pvalues, adjust=TRUE, side=1,
 	c(.01, .05, .1, .9, .95, .99), c(.01, .05, .1)), file="", 
 	pal=ifelse(rep(side==1, ifelse(side==1, 1, length(p.cutoffs)+1)),
 	"RdBu", rev(brewer.pal(length(p.cutoffs)+1,"Reds"))),
-	test = "Stouffers", edge.label=TRUE, ignore.edge.length=FALSE,
+	test = "Stouffer", edge.label=TRUE, ignore.edge.length=FALSE,
 	branch="edge")
 }
 \arguments{
@@ -46,7 +46,7 @@ the file path that the \code{NEXUS} file that \code{FigTree} can open is written
 one of the palettes from the RColorBrewer package (see \code{brewer.pal.info} for a list) or a vector of hexadecimal colors.  These are the colors that are used to color the branches.  The first color corresponds to the first range in p.cutoffs and so on.
 }
   \item{test}{
-a character string taking on either \code{"Stouffers"} or \code{"Fishers"}.  This is the p-value combination method that will be used.
+a character string taking on \code{"Hartung"}, \code{"Stouffer"}, or \code{"Fisher"}.  This is the p-value combination method that will be used.  In most cases, "Stouffer" will be most appropriate, unless \code{adonis.tree} indicates significant evidence of dependence among p-values, in which case "Hartung" is preferred.
 }
   \item{edge.label}{
 a logical argument that, when \code{TRUE}, produces edge label annotations in \code{FigTree}.  These annotations are the p-values of the edge's parent node when \code{branch="node"}.  They are accessible via highlighting an edge, hitting the \code{Annotate} button, and selecting \code{P-value}.
@@ -72,7 +72,7 @@ To access the tutorial document for this package (including this function), type
 This function creates a \code{NEXUS} file that can be opened by the program \code{FigTree}.
 }
 \references{
-Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2015) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2017) "SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
@@ -104,6 +104,11 @@ r.pval <- rbeta(node.size, .1, .1)
 set.seed(seed)
 r.tip.label <- sample(r.tree$tip.label, size=length(r.tree$tip.label))
 r.pvalues <- data.frame(label=r.tip.label, pval=r.pval)
+
+# Check for dependence among p-values; lack of significance here
+# indicates default test="Stouffer" is appropriate; 
+# otherwise, test="Hartung" would be more appropriate.
+adonis.tree(r.tree,r.pvalues)
 
 # Export "ExportFigtree1.tre" file that can be opened in FigTree
 library(phyext2)

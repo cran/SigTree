@@ -36,80 +36,88 @@ library(SigTree)
 
 
 ###################################################
-### code chunk number 6: SigTree.Rnw:177-178
+### code chunk number 6: SigTree.Rnw:183-184
 ###################################################
-plotSigTree(tree, frame)
+adonis.tree(tree,frame)
 
 
 ###################################################
-### code chunk number 7: SigTree.Rnw:215-220
+### code chunk number 7: SigTree.Rnw:193-194
+###################################################
+plotSigTree(tree, frame, test="Hartung")
+
+
+###################################################
+### code chunk number 8: SigTree.Rnw:237-243
 ###################################################
 library(RColorBrewer)
 RdBu <- brewer.pal(7, "RdBu")
 RdBu[4] <- brewer.pal(7, "Greys")[3]
-plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2)
+plotSigTree(tree, frame, test="Hartung",pal=RdBu, tip.label.size=.8, 
+            edge.width=2)
 legend("topright",c("C > T","C < T"),cex=1.5,text.col=RdBu[c(7,1)],bty="n")
 
 
 ###################################################
-### code chunk number 8: SigTree.Rnw:243-244 (eval = FALSE)
+### code chunk number 9: SigTree.Rnw:266-267 (eval = FALSE)
 ###################################################
-## plotSigTree(tree, frame, side=2)
+## plotSigTree(tree, frame, test="Hartung", side=2)
 
 
 ###################################################
-### code chunk number 9: SigTree.Rnw:253-257
+### code chunk number 10: SigTree.Rnw:276-281
 ###################################################
-plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2)
+plotSigTree(tree, frame, test="Hartung", pal=RdBu, tip.label.size=.8, 
+            edge.width=2)
 p.cut.leg <- c("0.00 - 0.01","0.01 - 0.05","0.05 - 0.10",
                "0.10 - 0.90","0.90 - 0.95","0.95 - 0.99","0.99 - 1.00")
 legend("topright",rev(p.cut.leg),text.col=rev(RdBu), bty="n", cex=1)
 
 
 ###################################################
-### code chunk number 10: SigTree.Rnw:297-302
+### code chunk number 11: SigTree.Rnw:324-329
 ###################################################
-plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2, 
-            branch="node")
+plotSigTree(tree, frame, test="Hartung", pal=RdBu, tip.label.size=.8, 
+            edge.width=2, branch="node")
 p.cut.leg <- c("0.00 - 0.01","0.01 - 0.05","0.05 - 0.10",
                "0.10 - 0.90","0.90 - 0.95","0.95 - 0.99","0.99 - 1.00")
 legend("topright",rev(p.cut.leg),text.col=rev(RdBu), bty="n", cex=1)
 
 
 ###################################################
-### code chunk number 11: SigTree.Rnw:318-319
+### code chunk number 12: SigTree.Rnw:345-346
 ###################################################
 p.adjust.methods
 
 
 ###################################################
-### code chunk number 12: SigTree.Rnw:328-329
+### code chunk number 13: SigTree.Rnw:355-356
 ###################################################
-plotSigTree(tree, frame, method="BY")
+plotSigTree(tree, frame, test="Hartung", method="BY")
 
 
 ###################################################
-### code chunk number 13: SigTree.Rnw:345-348
+### code chunk number 14: SigTree.Rnw:372-375
 ###################################################
-plotSigTree(tree, frame, pal=RdBu, tip.label.size=.8, edge.width=2, 
-            branch.label=TRUE, branch.label.size=.75)
+plotSigTree(tree, frame, test="Hartung", pal=RdBu, tip.label.size=.8, 
+            edge.width=2, branch.label=TRUE, branch.label.size=.75)
 edgelabels(edge=176,frame="circ",bg="yellow",cex=.8)
 
 
 ###################################################
-### code chunk number 14: SigTree.Rnw:356-357 (eval = FALSE)
+### code chunk number 15: SigTree.Rnw:383-384 (eval = FALSE)
 ###################################################
-## export.inherit(tree, frame, file="sampleInherit.csv")
+## export.inherit(tree, frame, test="Hartung", file="sampleInherit.csv")
 
 
 ###################################################
-### code chunk number 15: SigTree.Rnw:362-363
+### code chunk number 16: SigTree.Rnw:389-390
 ###################################################
-temp <- export.inherit(tree, frame, frame=TRUE)
+temp <- export.inherit(tree, frame, test="Hartung", frame=TRUE)
 
 
 ###################################################
-### code chunk number 16: SigTree.Rnw:369-372
+### code chunk number 17: SigTree.Rnw:396-399
 ###################################################
 br176 <- temp[temp$Branch=="176",]
 t <- !is.na(br176[1,])
@@ -117,7 +125,7 @@ br176[1,t]
 
 
 ###################################################
-### code chunk number 17: SigTree.Rnw:380-383
+### code chunk number 18: SigTree.Rnw:407-410
 ###################################################
 br106 <- temp[temp$Branch=="106",]
 t <- !is.na(br106[1,])
@@ -125,14 +133,14 @@ br106[1,t]
 
 
 ###################################################
-### code chunk number 18: SigTree.Rnw:393-395
+### code chunk number 19: SigTree.Rnw:420-422
 ###################################################
 library(phyext2) 
-export.figtree(tree, frame, pal=RdBu, file="sigsample.tre")
+export.figtree(tree, frame, test="Hartung", pal=RdBu, file="sigsample.tre")
 
 
 ###################################################
-### code chunk number 19: SigTree.Rnw:420-424
+### code chunk number 20: SigTree.Rnw:461-465
 ###################################################
 keep.taxa <- c("t57","t99","t53","t62","t39","t16",
                "t63","t67","t45","t1","t34","t82")
@@ -141,35 +149,35 @@ new_tree <- prune_taxa(keep.taxa, tree)
 
 
 ###################################################
-### code chunk number 20: SigTree.Rnw:430-434
+### code chunk number 21: SigTree.Rnw:471-475
 ###################################################
 t <- is.element(frame$OTU, keep.taxa)
 new_frame <- frame[t,]
-plotSigTree(new_tree, new_frame, pal=RdBu, tip.label.size=1.5, 
+plotSigTree(new_tree, new_frame, test="Hartung", pal=RdBu, tip.label.size=1.5, 
             edge.width=4)
 
 
 ###################################################
-### code chunk number 21: SigTree.Rnw:472-473 (eval = FALSE)
+### code chunk number 22: SigTree.Rnw:513-514 (eval = FALSE)
 ###################################################
 ## sig_tree <- read.tree("sigsample.tre")
 
 
 ###################################################
-### code chunk number 22: SigTree.Rnw:486-487
+### code chunk number 23: SigTree.Rnw:527-528
 ###################################################
 sig_tree <- read.nexus("sigsample.tre")
 
 
 ###################################################
-### code chunk number 23: SigTree.Rnw:495-497 (eval = FALSE)
+### code chunk number 24: SigTree.Rnw:536-538 (eval = FALSE)
 ###################################################
 ## singletontree.file <- paste(tre.path,"singletonsample.tre",sep="/")
 ## tree <- read.tree(singletontree.file)
 
 
 ###################################################
-### code chunk number 24: SigTree.Rnw:515-528 (eval = FALSE)
+### code chunk number 25: SigTree.Rnw:556-569 (eval = FALSE)
 ###################################################
 ## t1 <- read.table(singletontree.file)
 ## # remove initial (

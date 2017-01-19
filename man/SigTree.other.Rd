@@ -13,6 +13,7 @@
 \alias{edge.colors}
 \alias{plotphylo2}
 \alias{circularplot2}
+\alias{hartung}
 
 \title{
 SigTree Other Functions
@@ -35,6 +36,7 @@ Internal functions used by the main functions of \code{SigTree} (\code{plotSigTr
 \code{edge.colors}  \tab determine coloring of each edge \cr
 \code{plotphylo2}   \tab (based on \code{ape} package's \code{plot.phylo} function); plots \code{tree} while allowing for different edge coloring (root edge when \code{type="fan"}, and different colors for each half of the "perpendicular-to-the-root" edges). Prior to package version 1.2, \code{plot.phylo} was used instead. Beginning in package version 1.3 (to attain CRAN compatibility), includes .C calls to copies of four \code{ape} .C functions (copied with credit under \code{ape}'s GPL license).\cr
 \code{circularplot2} \tab (based on \code{ape} package's \code{circular.plot} function) called by \code{phyloplot2} when \code{type="fan"} \cr
+\code{hartung} \tab perform Hartung's Method on a vector of p-values; return one p-value \cr
 \tab \cr
   }
 }
@@ -47,9 +49,9 @@ To access the tutorial document for this package (including this function), type
 }
 
 \references{
-Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2015) "SigTree: identifying and visualizing significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2017) "SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
 
-Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
+Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree"  MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
 }
 \author{
