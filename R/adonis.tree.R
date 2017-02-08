@@ -60,6 +60,15 @@ adonis.tree <- function(tree,unsorted.pvalues,seed=1234,perms=10000,z=TRUE,make2
 	 use.tframe <- data.frame(OTU=unsorted.pvalues[,1],pval=unsorted.pvalues[,2])
      tempF <- merge(f1,use.tframe,sort=FALSE)
      x <- tempF$pval
+
+    # Repeat numerical stability correction on these p-values  (added to SigTree version 1.10.5)
+     f.one <- 1-100*.Machine$double.eps
+     f.zero <- 100*.Machine$double.eps
+     t <- x >= f.one
+     x[t] <- f.one
+     t <- x[2]<=f.zero
+     x[t] <- f.zero
+
      if(z){x <- qnorm(x)}
      res <- adonis(M~x,permutations=perms)
 	 return(res$aov.tab[1,6])
@@ -67,4 +76,3 @@ adonis.tree <- function(tree,unsorted.pvalues,seed=1234,perms=10000,z=TRUE,make2
 	 #aov.mat[is.na(aov.mat)] <- ""
 	 #return(as.data.frame(aov.mat))
    }
-

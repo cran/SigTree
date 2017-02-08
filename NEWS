@@ -1,3 +1,14 @@
+	  CHANGES IN SigTree VERSION 1.10.5
+
+BUG FIXES
+
+    o Added a numerical stability correction to adonis.tree
+
+OTHER CHANGES
+
+    o Updated citation and package vignette.
+
+
 	  CHANGES IN SigTree VERSION 1.10.4
 
 NEW FEATURES

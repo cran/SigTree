@@ -626,8 +626,8 @@ without the problematic singleton node.
  {\it Biometrics} 46(2):303-308.
 
  \bibitem{Stevens2017}
- Stevens J.R., Jones T.R., Lefevre M.L., Ganesan B., and Weimer B.C. (2016),
- ``SigTree: a metagenomics tool to identify and visualize significantly responsive branches in a phylogenetic tree,''
+ Stevens J.R., Jones T.R., Lefevre M.L., Ganesan B., and Weimer B.C. (2017),
+ ``SigTree: a microbial community analysis tool to identify and visualize significantly responsive branches in a phylogenetic tree,''
  manuscript in preparation.
 
  \bibitem{Stouffer1949}
