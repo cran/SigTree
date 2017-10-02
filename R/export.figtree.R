@@ -133,7 +133,9 @@ export.figtree <- function(tree, unsorted.pvalues, adjust=TRUE, side=1,
 		return(cat("Error: Value of branch must be either 'node' or 'edge'.","\n"))
 	}
 	#Use tree to create tree4d, a tree of class phylobase
-	tree4d <- phylo4d(tree)
+    #!# Fix added 09/05/17, to avoid problems when tree has node labels; prior to this fix, the next line was just
+    #!#   tree4d <- phylo4d(tree)
+    if(is.null(tree$node.label)){tree4d <- phylo4d(tree)}else{tree4d <- phylo4d(tree, check.node.labels="drop"); cat('Dropping node labels for convenience in SigTree visualization','\n')}
 	#Use tree4d to create tree4dext, a tree of class phyext.
 	new("phylo4d_ext", tree4d)->tree4dext
 	#Get n.total.nodes, n.tips, results, and edgecolor from functions.

@@ -1,4 +1,4 @@
-/* This file is taken from plot_phylo.c (2014-03-05),
+/* This file is based on plot_phylo.c (2014-03-05),
      which is Copyright 2004-2014 Emmanuel Paradis;
      that file is part of the R-package `ape'.
 	 The ape package license is GPL (>= 2),
@@ -11,12 +11,20 @@
 	 package building. The .C calls of SigTree's 
 	 plotphylo2 function call these routines.	 
    SigTree version 1.5 included a newer version of plot_phylo.c
-     (as SigTree.c). */
+     (as SigTree.c). 
+   Beginning in version 1.10.6, this file includes the "SigTree"
+     name appended to all four functions, to avoid a 
+	 failed check after some updates to the ape package.  */
 
 
 #include <R.h>
+#include <stdlib.h> // for NULL
 
-void node_depth_edgelength(int *ntip, int *nnode, int *edge1, int *edge2,
+#include <R_ext/Rdynload.h>
+
+
+
+void node_depth_edgelengthSigTree(int *ntip, int *nnode, int *edge1, int *edge2,
 			   int *nedge, double *edge_length, double *xx)
 {
     int i;
@@ -28,7 +36,7 @@ void node_depth_edgelength(int *ntip, int *nnode, int *edge1, int *edge2,
       xx[edge2[i] - 1] = xx[edge1[i] - 1] + edge_length[i];
 }
 
-void node_depth(int *ntip, int *nnode, int *e1, int *e2,
+void node_depthSigTree(int *ntip, int *nnode, int *e1, int *e2,
 		int *nedge, double *xx, int *method)
 /* method == 1: the node depths are proportional to the number of tips
    method == 2: the node depths are evenly spaced */
@@ -56,7 +64,7 @@ void node_depth(int *ntip, int *nnode, int *e1, int *e2,
     }
 }
 
-void node_height(int *ntip, int *nnode, int *edge1, int *edge2,
+void node_heightSigTree(int *ntip, int *nnode, int *edge1, int *edge2,
 		 int *nedge, double *yy)
 {
     int i, n;
@@ -82,14 +90,14 @@ void node_height(int *ntip, int *nnode, int *edge1, int *edge2,
     yy[edge1[i] - 1] = S/n;
 }
 
-void node_height_clado(int *ntip, int *nnode, int *edge1, int *edge2,
+void node_height_cladoSigTree(int *ntip, int *nnode, int *edge1, int *edge2,
 		       int *nedge, double *xx, double *yy)
 {
     int i, j, n;
     double S;
 
     i = 1;
-    node_depth(ntip, nnode, edge1, edge2, nedge, xx, &i);
+    node_depthSigTree(ntip, nnode, edge1, edge2, nedge, xx, &i);
 
     /* The coordinates of the tips have been already computed */
 
@@ -112,3 +120,34 @@ void node_height_clado(int *ntip, int *nnode, int *edge1, int *edge2,
     n += xx[j];
     yy[edge1[i] - 1] = S/n;
 }
+
+
+
+/* Register these C routines ... */
+
+static const R_CMethodDef CEntries[] = {
+
+    {"node_depth_edgelengthSigTree", (DL_FUNC) &node_depth_edgelengthSigTree, 7},
+
+    {"node_depthSigTree",            (DL_FUNC) &node_depthSigTree,            7},
+
+    {"node_height_cladoSigTree",     (DL_FUNC) &node_height_cladoSigTree,     7},
+
+    {"node_heightSigTree",           (DL_FUNC) &node_heightSigTree,           6},
+
+    {NULL, NULL, 0}
+
+};
+
+
+
+void R_init_SigTree(DllInfo *dll)
+
+{
+
+    R_registerRoutines(dll, CEntries, NULL, NULL, NULL);
+
+    R_useDynamicSymbols(dll, FALSE);
+
+}
+

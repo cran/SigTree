@@ -1,6 +1,6 @@
 exportPattern("*")
 
-useDynLib(SigTree)
+useDynLib(SigTree, .registration=TRUE)
 
 import(ape)
 importFrom(phylobase, phylo4d, tdata, "tdata<-", hasEdgeLength)
@@ -14,3 +14,4 @@ importFrom(stats, reorder, pchisq, p.adjust, median, uniroot, pnorm, qnorm, as.d
 importFrom(MASS, mvrnorm)
 
 import(vegan)
+

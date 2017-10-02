@@ -1,4 +1,3 @@
-
 #Functions that accept the tree and return the number of edges=num.edges; number of
 #  tips=num.tips
 #number of internal nodes=num.internal.nodes; total number of nodes (internal + tip) =
@@ -399,18 +398,18 @@ function (x, type = "phylogram", use.edge.length = TRUE, node.pos = NULL,
     }
     if (any(tabulate(x$edge[, 1]) == 1)) 
         stop("there are single (non-splitting) nodes in your tree; you may need to use collapse.singles()")
-    .nodeHeight <- function(Ntip, Nnode, edge, Nedge, yy)
-        .C(node_height, as.integer(Ntip), as.integer(Nnode),
+    .nodeHeightSigTree <- function(Ntip, Nnode, edge, Nedge, yy)
+        .C("node_heightSigTree", as.integer(Ntip), as.integer(Nnode),
            as.integer(edge[, 1]), as.integer(edge[, 2]),
            as.integer(Nedge), as.double(yy), PACKAGE = "SigTree")[[6]]
 
-    .nodeDepth <- function(Ntip, Nnode, edge, Nedge, node.depth)
-        .C(node_depth, as.integer(Ntip), as.integer(Nnode),
+    .nodeDepthSigTree <- function(Ntip, Nnode, edge, Nedge, node.depth)
+        .C("node_depthSigTree", as.integer(Ntip), as.integer(Nnode),
            as.integer(edge[, 1]), as.integer(edge[, 2]),
            as.integer(Nedge), double(Ntip + Nnode), as.integer(node.depth), PACKAGE = "SigTree")[[6]]
 
-    .nodeDepthEdgelength <- function(Ntip, Nnode, edge, Nedge, edge.length)
-        .C(node_depth_edgelength, as.integer(Ntip),
+    .nodeDepthEdgelengthSigTree <- function(Ntip, Nnode, edge, Nedge, edge.length)
+        .C("node_depth_edgelengthSigTree", as.integer(Ntip),
            as.integer(Nnode), as.integer(edge[, 1]),
            as.integer(edge[, 2]), as.integer(Nedge),
            as.double(edge.length), double(Ntip + Nnode), PACKAGE = "SigTree")[[7]]
@@ -470,8 +469,8 @@ function (x, type = "phylogram", use.edge.length = TRUE, node.pos = NULL,
                 node.pos <- 2
         }
         if (node.pos == 1) 
-           { yy <- .nodeHeight(Ntip, Nnode, z$edge, Nedge, yy) }  else {
-            ans <- .C(node_height_clado, as.integer(Ntip),
+           { yy <- .nodeHeightSigTree(Ntip, Nnode, z$edge, Nedge, yy) }  else {
+            ans <- .C("node_height_cladoSigTree", as.integer(Ntip),
                     as.integer(Nnode), as.integer(z$edge[, 1]),
                     as.integer(z$edge[, 2]), as.integer(Nedge),
                     double(Ntip + Nnode), as.double(yy), PACKAGE = "SigTree")
@@ -480,11 +479,11 @@ function (x, type = "phylogram", use.edge.length = TRUE, node.pos = NULL,
         }
         if (!use.edge.length) {
             if (node.pos != 2) 
-                xx <- .nodeDepth(Ntip, Nnode, z$edge, Nedge) - 
+                xx <- .nodeDepthSigTree(Ntip, Nnode, z$edge, Nedge) - 
                   1
             xx <- max(xx) - xx
         }  else {
-            xx <- .nodeDepthEdgelength(Ntip, Nnode, z$edge, Nedge, 
+            xx <- .nodeDepthEdgelengthSigTree(Ntip, Nnode, z$edge, Nedge, 
                 z$edge.length)
         }
     }  else {
@@ -497,31 +496,31 @@ function (x, type = "phylogram", use.edge.length = TRUE, node.pos = NULL,
             theta <- double(Ntip)
             theta[TIPS] <- xx
             theta <- c(theta, numeric(Nnode))
-            theta <- .nodeHeight(Ntip, Nnode, z$edge, Nedge, 
+            theta <- .nodeHeightSigTree(Ntip, Nnode, z$edge, Nedge, 
                 theta)
             if (use.edge.length) {
-                r <- .nodeDepthEdgelength(Ntip, Nnode, z$edge, 
+                r <- .nodeDepthEdgelengthSigTree(Ntip, Nnode, z$edge, 
                   Nedge, z$edge.length)
             } else {
-                r <- .nodeDepth(Ntip, Nnode, z$edge, Nedge)
+                r <- .nodeDepthSigTree(Ntip, Nnode, z$edge, Nedge)
                 r <- 1/r
             }
             theta <- theta + rotate.tree
             xx <- r * cos(theta)
             yy <- r * sin(theta)
         }, unrooted = {
-            nb.sp <- .nodeDepth(Ntip, Nnode, z$edge, Nedge)
+            nb.sp <- .nodeDepthSigTree(Ntip, Nnode, z$edge, Nedge)
             XY <- if (use.edge.length) unrooted.xy(Ntip, Nnode, 
                 z$edge, z$edge.length, nb.sp, rotate.tree) else unrooted.xy(Ntip, 
                 Nnode, z$edge, rep(1, Nedge), nb.sp, rotate.tree)
             xx <- XY$M[, 1] - min(XY$M[, 1])
             yy <- XY$M[, 2] - min(XY$M[, 2])
         }, radial = {
-            X <- .nodeDepth(Ntip, Nnode, z$edge, Nedge)
+            X <- .nodeDepthSigTree(Ntip, Nnode, z$edge, Nedge)
             X[X == 1] <- 0
             X <- 1 - X/Ntip
             yy <- c((1:Ntip) * twopi/Ntip, rep(0, Nnode))
-            Y <- .nodeHeight(Ntip, Nnode, z$edge, Nedge, yy)
+            Y <- .nodeHeightSigTree(Ntip, Nnode, z$edge, Nedge, yy)
             xx <- X * cos(Y + rotate.tree)
             yy <- X * sin(Y + rotate.tree)
         })

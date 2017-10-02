@@ -256,7 +256,8 @@ P-values below the smaller threshold (say $\alpha_0=0.05$) provide evidence
 to support $\mu_C < \mu_T$.  
 On the other hand, p-values above the upper threshold (say $1-\alpha_1 = 0.95$) provide evidence
 to support the other direction, $\mu_C > \mu_T$.  Whatever thresholds $\alpha_0$ and $\alpha_1$ are used,
-the actual Type I error rate is $\alpha = \alpha_0 + \alpha_1$.
+the actual Type I error rate is $\alpha = \alpha_0 + \alpha_1$.  
+(For additional discussion regarding interpretation of one-sided p-values, see the third paragraph of section 2.1 of Stevens \emph{et al.} (2017).)
 One of the reasons that Stouffer's method is preferred to Fisher's in \Rpackage{SigTree} is that Stouffer's approach
 symmetrically preserves this sidedness interpretation while Fisher's does not.
 
@@ -627,8 +628,8 @@ without the problematic singleton node.
 
  \bibitem{Stevens2017}
  Stevens J.R., Jones T.R., Lefevre M.L., Ganesan B., and Weimer B.C. (2017),
- ``SigTree: a microbial community analysis tool to identify and visualize significantly responsive branches in a phylogenetic tree,''
- manuscript in preparation.
+ ``SigTree: A Microbial Community Analysis Tool to Identify and Visualize Significantly Responsive Branches in a Phylogenetic Tree,''
+  {\it Computational and Structural Biotechnology Journal} 15:372-378.
 
  \bibitem{Stouffer1949}
  Stouffer S.A., Suchman E.A., DeVinney L.C., Star S.A., and Williams Jr. R.M. (1949),

@@ -72,7 +72,7 @@ To access the tutorial document for this package (including this function), type
 This function creates a \code{NEXUS} file that can be opened by the program \code{FigTree}.
 }
 \references{
-Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2017) "SigTree: a microbial community analysis tool to identify and visualize significantly responsive branches in a phylogenetic tree"  (Manuscript in preparation).
+Stevens J.R., Jones T.R., Lefevre M., Ganesan B., and Weimer B.C. (2017) "SigTree: A Microbial Community Analysis Tool to Identify and Visualize Significantly Responsive Branches in a Phylogenetic Tree."  Computational and Structural Biotechnology Journal 15:372-378.
 
 Jones T.R. (2012) "SigTree: An Automated Meta-Analytic Approach to Find Significant Branches in a Phylogenetic Tree" (2012). MS Thesis, Utah State University, Department of Mathematics and Statistics.  http://digitalcommons.usu.edu/etd/1314
 
@@ -112,7 +112,7 @@ adonis.tree(r.tree,r.pvalues)
 
 # Export "ExportFigtree1.tre" file that can be opened in FigTree
 library(phyext2)
-export.figtree(r.tree, r.pvalues, test="Stouffers", file="ExportFigtree1.tre")
+export.figtree(r.tree, r.pvalues, test="Stouffer", file="ExportFigtree1.tre")
 
 }
 \keyword{ tree }

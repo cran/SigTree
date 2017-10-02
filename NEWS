@@ -1,3 +1,18 @@
+	  CHANGES IN SigTree VERSION 1.10.6
+
+BUG FIXES
+
+    o Adjusted function export.inherit to handle trees with named nodes
+	
+    o Revised .C() calls to avoid fail check upon pending update to ape package.
+	  No change in SigTree package functionality.
+
+
+OTHER CHANGES
+
+    o Updated citation and package vignette.
+
+
 	  CHANGES IN SigTree VERSION 1.10.5
 
 BUG FIXES
